@@ -281,6 +281,33 @@ function renderPlans() {
   • Additional charges may apply for roof access or multi-story service conditions.<br>
 
   </div>
+` : key === "irrigation" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('irrigation');">View Details</button>
+  <div id="details-irrigation" class="details">
+
+  1. Irrigation System Zone Testing (Up to 4 Zones)<br>
+  • Test all irrigation zones for proper operation.<br>
+  • Verify coverage, pressure, and function of each zone.<br>
+  • Identify non-functioning or irregular zones.<br><br>
+
+  2. Sprinkler Head Adjustment<br>
+  • Adjust sprinkler heads for proper spray pattern and direction.<br>
+  • Improve coverage and reduce overspray or dry spots.<br>
+  • Perform minor alignment corrections as needed.<br><br>
+
+  3. Irrigation Controller Programming<br>
+  • Inspect and adjust controller settings.<br>
+  • Set or update watering schedule based on season and property needs.<br>
+  • Verify proper zone timing and operation.<br>
+  • Ensure system is programmed for efficient water usage.<br><br>
+
+  Service Notes<br>
+  • Designed for systems up to 4 zones; additional zones may incur extra charges.<br>
+  • Repairs, replacements, or damaged components will be quoted separately.<br>
+  • Service is non-invasive and limited to accessible components only.<br>
+
+  </div>
 ` : "";
 
     btn.innerHTML =
