@@ -156,11 +156,50 @@ function renderPlans() {
       plan3:"Plan 3 – Comprehensive Maintenance Package",
       irrigation:"Plan 4 – Annual Irrigation Maintenance Package"
     };
+btn.innerHTML =
+  "<strong>" + labels[key] + "</strong><br><span>" +
+  formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
+  "</span>" +
 
-    btn.innerHTML =
-      "<strong>" + labels[key] + "</strong><br><span>" +
-      formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
-      "</span>";
+  (key === "plan1" ? `
+  <br><br>
+  <button onclick="toggleDetails('plan1')" style="margin-top:10px;background:#e2e8f0;">View Details</button>
+
+  <div id="details-plan1" style="display:none; text-align:left; margin-top:10px; font-size:14px;">
+  Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
+
+  1. Smoke & Carbon Monoxide Detector Service<br>
+  • Test all smoke and CO detectors.<br>
+  • Replace batteries (standard detector batteries included, up to 6 units).<br>
+  • Verify proper operation and placement (visual check).<br>
+  • Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
+
+  2. HVAC Air Return Filter Replacement<br>
+  • Inspect existing filter condition.<br>
+  • Replace one standard 1-inch thick air return filter (included).<br>
+  • Ensure proper fit and airflow.<br>
+  • Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
+
+  3. Plumbing Visual Inspection<br>
+  • Inspect faucets for leaks, drips, or corrosion.<br>
+  • Check under-sink plumbing and visible drain lines.<br>
+  • Identify early signs of water damage or failure.<br>
+  • Check toilet for leaks, flushing, and stability.<br><br>
+
+  4. Light Fixtures & Ceiling Fan Check<br>
+  • Inspect accessible interior light fixtures and ceiling fans.<br>
+  • Verify proper operation (switches, speed settings, and function).<br>
+  • Check for wobble, noise, or mounting concerns in ceiling fans.<br>
+  • Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
+
+  5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
+  • Provide interior condition photos for homes up to 2,000 sq ft.<br>
+  • Document general condition at time of service.<br>
+  • Capture visible issues or concerns for records and reporting.<br>
+  • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
+  </div>
+  ` : "");
+   
   });
 }
 
@@ -234,3 +273,7 @@ updateQuote();
 </script>
 </body>
 </html>
+function toggleDetails(plan) {
+  const el = document.getElementById("details-" + plan);
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
