@@ -195,7 +195,52 @@ function renderPlans() {
       • Capture visible issues or concerns for records and reporting.<br>
       • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
       </div>
-    ` : "";
+   ` : key === "plan2" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan2');">View Details</button>
+  <div id="details-plan2" class="details">
+  Includes all services in Plan 1, plus the following additional services:<br><br>
+
+  1. Water Heater Inspection & Flush<br>
+  • Inspect water heater for proper operation and visible signs of wear or leaks.<br>
+  • Check temperature/pressure relief valve (visual only).<br>
+  • Perform tank flush to remove sediment buildup, where applicable.<br>
+  • Identify potential issues or recommended maintenance (repairs or replacement quoted separately).<br><br>
+
+  2. Dryer Vent Inspection & Cleaning<br>
+  • Inspect accessible dryer vent system for lint buildup or airflow restriction.<br>
+  • Clean dryer vent as needed to improve efficiency and reduce fire risk.<br>
+  • Identify any damaged or improperly installed vent components (repairs or replacement quoted separately).<br>
+  • Roof-mounted dryer vents on 2–3 story homes will require an additional charge.<br><br>
+
+  3. Closet Door Adjustment<br>
+  • Inspect closet doors for alignment and operation.<br>
+  • Adjust tracks, rollers, or hinges as needed for proper function.<br>
+  • Improve ease of use and help prevent further wear (replacement quoted if needed).<br><br>
+
+  4. Door Hardware Maintenance<br>
+  • Lubricate door locks, latches, and hinges.<br>
+  • Tighten loose hardware including handles, strike plates, and hinges.<br>
+  • Ensure smooth operation and proper door closure (replacement quoted if needed).<br><br>
+
+  Property Manager Option: +$30<br>
+  • Interior condition photos for homes up to 2,000 sq ft.<br>
+  • Photos and findings delivered via email for professional documentation and easy record keeping.<br><br>
+
+  Additional Benefits<br>
+  • Improves appliance efficiency and lifespan (water heater and dryer system).<br>
+  • Reduces fire risk from clogged dryer vents.<br>
+  • Enhances overall property functionality and tenant satisfaction.<br>
+  • Addresses common wear-and-tear issues proactively.<br>
+  • Reduces maintenance calls for minor issues.<br><br>
+
+  Service Notes<br>
+  • This is a non-invasive visual and functional maintenance service.<br>
+  • Services are limited to accessible components only.<br>
+  • Repairs or replacements beyond listed scope will be quoted separately.<br>
+  • Additional charges may apply for roof access or multi-story service conditions.<br>
+  </div>
+` : "";
 
     btn.innerHTML =
       "<strong>" + labels[key] + "</strong><br><span>" +
