@@ -1,86 +1,40 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobile Onsite Handyman Services LLC - Quote Tool</title>
-  <style>
-    body { font-family: Arial, sans-serif; background:#f8fafc; margin:0; padding:16px; color:#0f172a; }
-    .wrap { max-width:900px; margin:0 auto; }
-    .hero { background:linear-gradient(90deg,#0f172a,#047857); color:white; border-radius:24px; padding:24px; margin-bottom:16px; }
-    .card { background:white; border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); }
-    input, select, button { width:100%; padding:14px; border-radius:14px; border:1px solid #cbd5e1; font-size:16px; box-sizing:border-box; }
-    button { cursor:pointer; }
-    .plan-btn { text-align:left; background:white; margin-bottom:10px; }
-    .plan-btn.active { border:2px solid #059669; background:#ecfdf5; }
-    .muted { font-size:12px; text-transform:uppercase; color:#64748b; }
-    .big { font-size:30px; font-weight:bold; }
-    .greenbox { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:14px; padding:14px; }
-    .graybox { background:#f1f5f9; border-radius:14px; padding:14px; }
-    .row { display:grid; gap:12px; }
-    .note { font-size:14px; color:#475569; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="hero">
-      <div style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;">Mobile Quote Tool</div>
-      <h1 style="margin:8px 0 4px 0;">Mobile Onsite Handyman Services LLC</h1>
-      <p style="margin:0;opacity:.9;">Property maintenance plans priced by service area</p>
-    </div>
+import React, { useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Home, MapPin, CalendarDays, Wrench, ShieldCheck, Droplets, Filter } from "lucide-react";
 
-    <div class="card">
-      <h2>1. Property Area</h2>
-      <input id="area" placeholder="Enter city or ZIP code">
-      <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter city or ZIP to detect pricing zone</div>
-    </div>
+const businessName = "Mobile Onsite Handyman Services LLC";
+const businessTagline = "Property maintenance plans priced by service area";
+const logoUrl = "";
+const bookingBaseUrl = "https://your-calendar-booking-link.com";
+const calendarEmbedEnabled = !bookingBaseUrl.includes("your-calendar-booking-link.com");
 
-    <div class="card" id="plansCard" style="display:none;">
-      <h2>2. Select Plan</h2>
-      <button class="plan-btn" data-plan="plan1"></button>
-      <button class="plan-btn" data-plan="plan2"></button>
-      <button class="plan-btn" data-plan="plan3"></button>
-      <button class="plan-btn" data-plan="irrigation"></button>
-    </div>
+const basePlans = {
+  plan1: 165,
+  plan2: 250,
+  plan3: 365,
+  irrigation: 159,
+};
 
-    <div class="card" id="filtersCard" style="display:none;">
-      <h2>3. HVAC Filter Add-Ons</h2>
-      <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
-      <div class="row">
-        <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
-        <select id="filterType">
-          <option value="standard">Standard 1-inch</option>
-          <option value="large">Large filter</option>
-          <option value="media">Media / 4-inch</option>
-        </select>
-        <button id="atticBtn" type="button">No Attic Access Charge</button>
-      </div>
-    </div>
+const planMeta = {
+  plan1: { label: "Plan 1", icon: ShieldCheck, subtitle: "Essential Maintenance" },
+  plan2: { label: "Plan 2", icon: Wrench, subtitle: "Enhanced Maintenance" },
+  plan3: { label: "Plan 3", icon: Home, subtitle: "Comprehensive Maintenance" },
+  irrigation: { label: "Plan 4", icon: Droplets, subtitle: "Annual Irrigation Maintenance" },
+};
 
-    <div class="card" id="summaryCard" style="display:none;">
-      <h2>4. Quote Summary</h2>
-      <div class="row">
-        <div class="graybox"><div class="muted">Zone price</div><div class="big" id="basePrice">$0</div></div>
-        <div class="graybox"><div class="muted">Filter add-ons</div><div class="big" id="addOnPrice">$0</div></div>
-        <div class="greenbox"><div class="muted" style="color:#047857;">Total quote</div><div class="big" id="totalPrice">$0</div></div>
-      </div>
-    </div>
-  </div>
-
-<script>
-const basePlans = { plan1:165, plan2:250, plan3:365, irrigation:159 };
 const zones = {
-  1:{ name:"Zone 1", label:"Budget", adjustment:0, cities:["moreno valley","perris","hemet","san bernardino"], zipPrefixes:["92557","92553","92543","92544","92545","924"] },
-  2:{ name:"Zone 2", label:"Standard", adjustment:20, cities:["riverside","menifee","fontana","rialto","ontario","corona"], zipPrefixes:["92501","92584","92335","92336","92337","92376","91761","92879","92880","92881"] },
-  3:{ name:"Zone 3", label:"Premium", adjustment:45, cities:["temecula","murrieta","rancho cucamonga","chino hills","fallbrook"], zipPrefixes:["92590","92591","92592","92562","92563","91730","91737","91739","91709","92028"] },
-  4:{ name:"Zone 4", label:"Coastal", adjustment:95, cities:["newport beach","laguna beach","dana point","san clemente","irvine","carlsbad","encinitas","del mar","la jolla"], zipPrefixes:["92660","92661","92662","92663","92651","92629","92672","92673","92602","92603","92008","92024","92014","92037"] }
+  1: { name: "Zone 1", label: "Budget", adjustment: 0, cities: ["moreno valley", "perris", "hemet", "san bernardino"], zipPrefixes: ["92557", "92553", "92543", "92544", "92545", "924"] },
+  2: { name: "Zone 2", label: "Standard", adjustment: 20, cities: ["riverside", "menifee", "fontana", "rialto", "ontario", "corona"], zipPrefixes: ["92501", "92584", "92335", "92336", "92337", "92376", "91761", "92879", "92880", "92881"] },
+  3: { name: "Zone 3", label: "Premium", adjustment: 45, cities: ["temecula", "murrieta", "rancho cucamonga", "chino hills", "fallbrook"], zipPrefixes: ["92590", "92591", "92592", "92562", "92563", "91730", "91737", "91739", "91709", "92028"] },
+  4: { name: "Zone 4", label: "Coastal", adjustment: 95, cities: ["newport beach", "laguna beach", "dana point", "san clemente", "irvine", "carlsbad", "encinitas", "del mar", "la jolla"], zipPrefixes: ["92660", "92661", "92662", "92663", "92651", "92629", "92672", "92673", "92602", "92603", "92008", "92024", "92014", "92037"] },
 };
 
 const cityLookup = new Map();
 const zipLookup = [];
 Object.entries(zones).forEach(([zoneNumber, zone]) => {
-  zone.cities.forEach(city => cityLookup.set(city, { zoneNumber, ...zone }));
-  zone.zipPrefixes.forEach(prefix => zipLookup.push({ prefix, value:{ zoneNumber, ...zone } }));
+  zone.cities.forEach((city) => cityLookup.set(city, { zoneNumber, ...zone }));
+  zone.zipPrefixes.forEach((prefix) => zipLookup.push({ prefix, value: { zoneNumber, ...zone } }));
 });
 
 function findZone(query) {
@@ -88,86 +42,336 @@ function findZone(query) {
   if (!q) return null;
   if (cityLookup.has(q)) return cityLookup.get(q);
   const digits = q.replace(/\D/g, "");
-  const hit = zipLookup.find(z => digits.startsWith(z.prefix));
-  return hit ? hit.value : null;
+  return zipLookup.find((z) => digits.startsWith(z.prefix))?.value || null;
 }
-function formatCurrency(v){ return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(v); }
-function getBasePlanPrice(plan, adj){ return plan === "irrigation" ? basePlans.irrigation + Math.round(adj * 0.75) : basePlans[plan] + adj; }
-function getFilterPrice(type){ if(type==="large") return 35; if(type==="media") return 75; return 25; }
 
-let selectedPlan = "plan2";
-let attic = false;
-let currentZone = null;
+function formatCurrency(v) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(v);
+}
 
-const area = document.getElementById("area");
-const zoneBox = document.getElementById("zoneBox");
-const plansCard = document.getElementById("plansCard");
-const filtersCard = document.getElementById("filtersCard");
-const summaryCard = document.getElementById("summaryCard");
-const filters = document.getElementById("filters");
-const filterType = document.getElementById("filterType");
-const atticBtn = document.getElementById("atticBtn");
+function getBasePlanPrice(plan, adj) {
+  return plan === "irrigation"
+    ? basePlans.irrigation + Math.round(adj * 0.75)
+    : basePlans[plan] + adj;
+}
 
-function renderPlans() {
-  document.querySelectorAll(".plan-btn").forEach(btn => {
-    const key = btn.dataset.plan;
-    btn.classList.toggle("active", selectedPlan === key);
-    const labels = {
-      plan1:"Plan 1 – Essential Maintenance Package",
-      plan2:"Plan 2 – Enhanced Maintenance Package",
-      plan3:"Plan 3 – Comprehensive Maintenance Package",
-      irrigation:"Plan 4 – Annual Irrigation Maintenance Package"
+function buildUrl(plan, zone, query, price) {
+  const params = new URLSearchParams({ plan, zone: zone.name, area: query, price: String(price) });
+  return `${bookingBaseUrl}?${params.toString()}`;
+}
+
+function getFilterPricePerUnit(filterType) {
+  if (filterType === "large") return 35;
+  if (filterType === "media") return 75;
+  return 25;
+}
+
+function getSuggestedFilterCount(squareFeet, plan) {
+  if (plan === "irrigation") return 0;
+  const sf = Number(squareFeet) || 0;
+  if (!sf) return 1;
+  if (sf <= 1200) return 1;
+  if (sf <= 2200) return 2;
+  if (sf <= 3200) return 3;
+  return 4;
+}
+
+function getSuggestedFilterType(squareFeet, zoneLabel) {
+  const sf = Number(squareFeet) || 0;
+  if (sf >= 2800 || zoneLabel === "Coastal" || zoneLabel === "Premium") return "large";
+  if (sf >= 3800) return "media";
+  return "standard";
+}
+
+export default function App() {
+  const [query, setQuery] = useState("");
+  const [plan, setPlan] = useState("plan2");
+  const [squareFeet, setSquareFeet] = useState("");
+  const [filterCount, setFilterCount] = useState(1);
+  const [filterType, setFilterType] = useState("standard");
+  const [atticAccess, setAtticAccess] = useState(false);
+  const [manualZone, setManualZone] = useState("");
+  const [autoDetect, setAutoDetect] = useState(true);
+
+  const detectedZone = useMemo(() => findZone(query), [query]);
+  const zone = detectedZone || (manualZone ? { zoneNumber: manualZone, ...zones[manualZone] } : null);
+
+  const detectedFilterCount = useMemo(() => getSuggestedFilterCount(squareFeet, plan), [squareFeet, plan]);
+  const detectedFilterType = useMemo(() => getSuggestedFilterType(squareFeet, zone?.label || ""), [squareFeet, zone]);
+
+  const activeFilterCount = autoDetect ? detectedFilterCount : Number(filterCount) || 1;
+  const activeFilterType = autoDetect ? detectedFilterType : filterType;
+
+  const filterPricing = useMemo(() => {
+    const includedFilters = plan === "irrigation" ? 0 : 1;
+    const perFilter = getFilterPricePerUnit(activeFilterType);
+    const extraFilters = Math.max(0, activeFilterCount - includedFilters);
+    const extraFilterCost = extraFilters * perFilter;
+    const atticFee = atticAccess ? 35 : 0;
+    return {
+      includedFilters,
+      extraFilters,
+      perFilter,
+      extraFilterCost,
+      atticFee,
+      total: extraFilterCost + atticFee,
     };
-    btn.innerHTML = "<strong>" + labels[key] + "</strong><br><span>" + formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) + "</span>";
-  });
+  }, [activeFilterCount, activeFilterType, atticAccess, plan]);
+
+  const basePrice = zone ? getBasePlanPrice(plan, zone.adjustment) : 0;
+  const totalPrice = basePrice + (plan === "irrigation" ? 0 : filterPricing.total);
+  const bookingUrl = zone ? buildUrl(plan, zone, query, totalPrice) : "";
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <div className="mx-auto max-w-5xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
+        <section className="rounded-3xl bg-gradient-to-r from-slate-900 to-emerald-700 p-4 sm:p-6 md:p-8 text-white shadow-xl">
+          <div className="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              {logoUrl ? (
+                <img src={logoUrl} alt={`${businessName} logo`} className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-white object-contain p-2" />
+              ) : (
+                <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20 shrink-0">
+                  <Wrench className="h-7 w-7 sm:h-8 sm:w-8" />
+                </div>
+              )}
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-white/70">Mobile Quote Tool</p>
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight break-words">{businessName}</h1>
+                <p className="mt-1 text-xs sm:text-sm text-white/80">{businessTagline}</p>
+              </div>
+            </div>
+            <div className="rounded-2xl bg-white/10 px-3 py-3 text-xs sm:text-sm text-white/90 backdrop-blur md:max-w-xs">
+              Built for quick quoting on iPhone. Enter area, pick plan, and get a live total.
+            </div>
+          </div>
+        </section>
+
+        <Card className="border-0 shadow-md rounded-3xl overflow-hidden">
+          <CardHeader className="bg-white border-b pb-3">
+            <CardTitle className="text-lg sm:text-xl">1. Property Area</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 p-4 sm:p-6">
+            <div className="relative">
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Enter city or ZIP code"
+                className="h-12 sm:h-14 rounded-2xl border-slate-300 pl-11 text-base sm:text-lg focus-visible:ring-emerald-600"
+              />
+              <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">Home size (sq ft)</label>
+                <Input
+                  value={squareFeet}
+                  onChange={(e) => setSquareFeet(e.target.value)}
+                  inputMode="numeric"
+                  placeholder="Example: 1800"
+                  className="h-12 rounded-2xl text-base"
+                />
+              </div>
+              <div className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-900 ring-1 ring-emerald-200 self-end min-h-12 flex items-center">
+                {detectedZone ? `Matched pricing area: ${detectedZone.name} (${detectedZone.label})` : zone ? `Manual zone selected: ${zone.name} (${zone.label})` : "Enter city or ZIP to detect pricing zone, or select a zone manually below"}
+              </div>
+            </div>
+
+            {!detectedZone && (
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">Manual zone fallback</label>
+                <select
+                  value={manualZone}
+                  onChange={(e) => setManualZone(e.target.value)}
+                  className="h-12 w-full rounded-2xl border border-slate-300 bg-white px-3 text-base"
+                >
+                  <option value="">Select pricing zone manually</option>
+                  <option value="1">Zone 1 — Budget</option>
+                  <option value="2">Zone 2 — Standard</option>
+                  <option value="3">Zone 3 — Premium</option>
+                  <option value="4">Zone 4 — Coastal</option>
+                </select>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {zone && (
+          <Card className="border-0 shadow-md rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b pb-3">
+              <CardTitle className="text-lg sm:text-xl">2. Select Plan</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-3 p-4 sm:p-6 sm:grid-cols-2">
+              {Object.keys(planMeta).map((key) => {
+                const meta = planMeta[key];
+                const Icon = meta.icon;
+                const selected = plan === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setPlan(key)}
+                    className={`rounded-2xl border p-4 text-left transition active:scale-[0.99] ${selected ? "border-emerald-600 bg-emerald-50 ring-2 ring-emerald-200" : "border-slate-200 bg-white hover:border-slate-300"}`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`rounded-xl p-2 ${selected ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-700"}`}>
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-sm sm:text-base">{meta.label}</div>
+                          <div className="text-xs sm:text-sm text-slate-500">{meta.subtitle}</div>
+                        </div>
+                      </div>
+                      <div className="text-base sm:text-lg font-bold shrink-0">{formatCurrency(getBasePlanPrice(key, zone.adjustment))}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </CardContent>
+          </Card>
+        )}
+
+        {zone && plan !== "irrigation" && (
+          <Card className="border-0 shadow-md rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b pb-3">
+              <CardTitle className="text-lg sm:text-xl flex items-center gap-2"><Filter className="h-5 w-5" /> 3. HVAC Filter Add-Ons</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-4 sm:p-6">
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
+                Plan includes <strong>1 standard filter</strong>. Extra filters and attic access are added automatically.
+              </div>
+
+              <div className="flex flex-col gap-3 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div className="font-medium">Auto-detect filter setup</div>
+                  <div className="text-sm text-slate-500">Uses home size and area to suggest filter count and type.</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAutoDetect(!autoDetect)}
+                  className={`rounded-full px-4 py-2 text-sm font-medium ${autoDetect ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-800"}`}
+                >
+                  {autoDetect ? "Auto On" : "Manual"}
+                </button>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-700">Filter count</label>
+                  <Input
+                    value={autoDetect ? activeFilterCount : filterCount}
+                    onChange={(e) => setFilterCount(e.target.value)}
+                    inputMode="numeric"
+                    disabled={autoDetect}
+                    className="h-12 rounded-2xl text-base disabled:opacity-70"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-slate-700">Filter type</label>
+                  <select
+                    value={autoDetect ? activeFilterType : filterType}
+                    onChange={(e) => setFilterType(e.target.value)}
+                    disabled={autoDetect}
+                    className="h-12 w-full rounded-2xl border border-slate-300 bg-white px-3 text-base disabled:opacity-70"
+                  >
+                    <option value="standard">Standard 1-inch</option>
+                    <option value="large">Large filter</option>
+                    <option value="media">Media / 4-inch</option>
+                  </select>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="mb-2 block text-sm font-medium text-slate-700">Attic or forced-air unit access</label>
+                  <button
+                    type="button"
+                    onClick={() => setAtticAccess(!atticAccess)}
+                    className={`h-12 w-full rounded-2xl px-4 text-base font-medium ${atticAccess ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-800"}`}
+                  >
+                    {atticAccess ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Suggested setup</div>
+                  <div className="mt-1 font-semibold">{activeFilterCount} filter{activeFilterCount === 1 ? "" : "s"}</div>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Type</div>
+                  <div className="mt-1 font-semibold capitalize">{activeFilterType}</div>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Extra filters</div>
+                  <div className="mt-1 font-semibold">{filterPricing.extraFilters}</div>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Filter add-ons</div>
+                  <div className="mt-1 font-semibold">{formatCurrency(filterPricing.total)}</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {zone && (
+          <Card className="border-0 shadow-md rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b pb-3">
+              <CardTitle className="text-lg sm:text-xl">4. Quote Summary</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-4 sm:p-6">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded-2xl bg-slate-100 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Zone price</div>
+                  <div className="mt-1 text-xl font-bold">{formatCurrency(basePrice)}</div>
+                </div>
+                <div className="rounded-2xl bg-slate-100 p-4">
+                  <div className="text-xs uppercase tracking-wide text-slate-500">Filter add-ons</div>
+                  <div className="mt-1 text-xl font-bold">{formatCurrency(plan === "irrigation" ? 0 : filterPricing.total)}</div>
+                </div>
+                <div className="rounded-2xl bg-emerald-50 p-4 ring-1 ring-emerald-200 sm:col-span-2">
+                  <div className="text-xs uppercase tracking-wide text-emerald-700">Total quote</div>
+                  <div className="mt-1 text-2xl sm:text-3xl font-bold text-emerald-900">{formatCurrency(totalPrice)}</div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border p-4 text-sm text-slate-700">
+                <div><strong>Area:</strong> {query}</div>
+                <div><strong>Plan:</strong> {planMeta[plan].label} — {planMeta[plan].subtitle}</div>
+                {plan !== "irrigation" && (
+                  <>
+                    <div><strong>Included filters:</strong> {filterPricing.includedFilters}</div>
+                    <div><strong>Additional filters:</strong> {filterPricing.extraFilters} × {formatCurrency(filterPricing.perFilter)}</div>
+                    <div><strong>Attic / closet access:</strong> {atticAccess ? formatCurrency(filterPricing.atticFee) : formatCurrency(0)}</div>
+                  </>
+                )}
+              </div>
+
+              <a
+                href={bookingUrl || "#"}
+                target="_blank"
+                rel="noreferrer"
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 text-base font-medium text-white transition ${bookingUrl ? "bg-emerald-600 hover:bg-emerald-700" : "bg-slate-400 pointer-events-none"}`}
+              >
+                <CalendarDays className="h-5 w-5" />
+                Open Booking Page
+              </a>
+
+              {!calendarEmbedEnabled && (
+                <div className="rounded-2xl border border-dashed border-slate-300 p-4 text-sm text-slate-600">
+                  Add your real booking link in the code to make the booking button live.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
 }
-
-function updateQuote() {
-  currentZone = findZone(area.value);
-  if (!currentZone) {
-    zoneBox.textContent = "Enter city or ZIP to detect pricing zone";
-    plansCard.style.display = "none";
-    filtersCard.style.display = "none";
-    summaryCard.style.display = "none";
-    return;
-  }
-
-  zoneBox.textContent = "Matched pricing area: " + currentZone.name + " (" + currentZone.label + ")";
-  plansCard.style.display = "block";
-  summaryCard.style.display = "block";
-  filtersCard.style.display = selectedPlan === "irrigation" ? "none" : "block";
-
-  renderPlans();
-
-  const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
-  const included = selectedPlan === "irrigation" ? 0 : 1;
-  const extraFilters = Math.max(0, Number(filters.value || 0) - included);
-  const addOn = selectedPlan === "irrigation" ? 0 : (extraFilters * getFilterPrice(filterType.value) + (attic ? 35 : 0));
-  const total = basePrice + addOn;
-
-  document.getElementById("basePrice").textContent = formatCurrency(basePrice);
-  document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
-  document.getElementById("totalPrice").textContent = formatCurrency(total);
-}
-
-area.addEventListener("input", updateQuote);
-filters.addEventListener("input", updateQuote);
-filterType.addEventListener("change", updateQuote);
-atticBtn.addEventListener("click", function() {
-  attic = !attic;
-  atticBtn.textContent = attic ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge";
-  atticBtn.style.background = attic ? "#059669" : "#e2e8f0";
-  atticBtn.style.color = attic ? "white" : "#0f172a";
-  updateQuote();
-});
-document.querySelectorAll(".plan-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    selectedPlan = btn.dataset.plan;
-    updateQuote();
-  });
-});
-
-updateQuote();
-</script>
-</body>
-</html>
