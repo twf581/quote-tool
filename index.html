@@ -366,7 +366,17 @@ if (selectedPlan !== "irrigation") {
   }
 }
 
-const addOn = filterAddOn + (attic ? 35 : 0);
+let detectorPrice = 0;
+const detectorType = document.getElementById("detectorType").value;
+const detectorQty = Number(document.getElementById("detectorQty").value || 0);
+
+if (detectorType === "hardwired") detectorPrice = 40;
+if (detectorType === "combo") detectorPrice = 70;
+if (detectorType === "battery") detectorPrice = 70;
+
+const detectorTotal = detectorPrice * detectorQty;
+
+const addOn = filterAddOn + detectorTotal + (attic ? 35 : 0);
   const total = basePrice + addOn;
 
   document.getElementById("basePrice").textContent = formatCurrency(basePrice);
@@ -378,6 +388,8 @@ area.addEventListener("input", updateQuote);
 filters.addEventListener("input", updateQuote);
 filterType.addEventListener("change", updateQuote);
 manualZone.addEventListener("change", updateQuote);
+document.getElementById("detectorType").addEventListener("change", updateQuote);
+document.getElementById("detectorQty").addEventListener("input", updateQuote);  
 
 atticBtn.addEventListener("click", function() {
   attic = !attic;
