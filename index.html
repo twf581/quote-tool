@@ -341,9 +341,24 @@ function updateQuote() {
   const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
   const included = selectedPlan === "irrigation" ? 0 : 1;
   const extraFilters = Math.max(0, Number(filters.value || 0) - included);
-  const addOn = selectedPlan === "irrigation"
-    ? 0
-    : (extraFilters * getFilterPrice(filterType.value) + (attic ? 35 : 0));
+  const filterCountNum = Number(filters.value || 0);
+
+let filterAddOn = 0;
+
+if (selectedPlan !== "irrigation") {
+  if (
+    filterType.value === "16x20x4" ||
+    filterType.value === "20x25x4" ||
+    filterType.value === "media"
+  ) {
+    filterAddOn = filterCountNum * getFilterPrice(filterType.value);
+  } else {
+    const extraFilters = Math.max(0, filterCountNum - 1);
+    filterAddOn = extraFilters * getFilterPrice(filterType.value);
+  }
+}
+
+const addOn = filterAddOn + (attic ? 35 : 0);
   const total = basePrice + addOn;
 
   document.getElementById("basePrice").textContent = formatCurrency(basePrice);
