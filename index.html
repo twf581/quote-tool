@@ -225,6 +225,74 @@ function renderPlans() {
   • Ensure smooth operation and proper door closure (replacement quoted if needed).<br>
 
   </div>
+` : key === "plan3" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan3');">View Details</button>
+  <div id="details-plan3" class="details">
+
+  Includes all services in Plan 1 and Plan 2, plus the following additional services:<br><br>
+
+  1. Visual Roof Inspection<br>
+  • Inspect roof from accessible vantage points.<br>
+  • Identify visible signs of wear, damage, or aging.<br>
+  • Check for missing, damaged, or deteriorated roofing materials.<br>
+  • Inspect visible flashing, penetrations, and roof components.<br>
+  • Limited to safe and accessible conditions; non-invasive with no destructive testing.<br><br>
+
+  2. Exterior Home Inspection<br>
+  • Inspect exterior walls, siding, and trim for visible damage or deterioration.<br>
+  • Check windows and doors for visible seal or frame issues.<br>
+  • Inspect eaves, fascia, and soffits in accessible areas.<br>
+  • Observe drainage conditions around the home, including visible grading concerns.<br>
+  • Identify maintenance items that may impact overall property condition.<br><br>
+
+  3. Reporting & Documentation<br>
+  • All findings documented with photos.<br>
+  • Clear identification of maintenance items, monitor items, and recommended repairs.<br><br>
+
+  Property Manager Option: +$30 for interior condition photos up to 2,000 sq ft, delivered via email.<br><br>
+
+  Additional Benefits<br>
+  • Provides a full interior and exterior condition overview.<br>
+  • Helps detect costly roof and exterior issues early.<br>
+  • Ideal for property managers and absentee owners.<br>
+  • Supports liability protection and asset tracking through documentation.<br>
+  • Offers the highest level of preventative maintenance and oversight.<br><br>
+
+  Service Notes<br>
+  • This is a non-invasive visual and functional maintenance service.<br>
+  • Services are limited to accessible areas and safe working conditions.<br>
+  • Repairs or replacements beyond listed scope will be quoted separately.<br>
+  • Additional charges may apply for roof access or multi-story service conditions.<br>
+
+  </div>
+` : key === "irrigation" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('irrigation');">View Details</button>
+  <div id="details-irrigation" class="details">
+
+  1. Irrigation System Zone Testing (Up to 4 Zones)<br>
+  • Test all irrigation zones for proper operation.<br>
+  • Verify coverage, pressure, and function of each zone.<br>
+  • Identify non-functioning or irregular zones.<br><br>
+
+  2. Sprinkler Head Adjustment<br>
+  • Adjust sprinkler heads for proper spray pattern and direction.<br>
+  • Improve coverage and reduce overspray or dry spots.<br>
+  • Perform minor alignment corrections as needed.<br><br>
+
+  3. Irrigation Controller Programming<br>
+  • Inspect and adjust controller settings.<br>
+  • Set or update watering schedule based on season and property needs.<br>
+  • Verify proper zone timing and operation.<br>
+  • Ensure system is programmed for efficient water usage.<br><br>
+
+  Service Notes<br>
+  • Designed for systems up to 4 zones; additional zones may incur extra charges.<br>
+  • Repairs, replacements, or damaged components will be quoted separately.<br>
+  • Service is non-invasive and limited to accessible components only.<br>
+
+  </div>
 ` : "";
     btn.innerHTML =
       "<strong>" + labels[key] + "</strong><br><span>" +
