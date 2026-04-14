@@ -11,7 +11,7 @@
     .card { background:white; border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); }
     input, select, button { width:100%; padding:14px; border-radius:14px; border:1px solid #cbd5e1; font-size:16px; box-sizing:border-box; }
     button { cursor:pointer; }
-    .plan-btn { text-align:left; background:white; margin-bottom:10px; }
+    .plan-btn { text-align:left; background:white; margin-bottom:10px; padding:14px; border-radius:14px; border:1px solid #cbd5e1; cursor:pointer; }
     .plan-btn.active { border:2px solid #059669; background:#ecfdf5; }
     .muted { font-size:12px; text-transform:uppercase; color:#64748b; }
     .big { font-size:30px; font-weight:bold; }
@@ -19,6 +19,8 @@
     .graybox { background:#f1f5f9; border-radius:14px; padding:14px; }
     .row { display:grid; gap:12px; }
     .note { font-size:14px; color:#475569; }
+    .details { display:none; text-align:left; margin-top:10px; font-size:14px; line-height:1.5; }
+    .detail-btn { margin-top:10px; background:#e2e8f0; }
   </style>
 </head>
 <body>
@@ -46,10 +48,10 @@
 
     <div class="card" id="plansCard" style="display:none;">
       <h2>2. Select Plan</h2>
-    <div class="plan-btn" data-plan="plan1"></div>
-<div class="plan-btn" data-plan="plan2"></div>
-<div class="plan-btn" data-plan="plan3"></div>
-<div class="plan-btn" data-plan="irrigation"></div>
+      <div class="plan-btn" data-plan="plan1"></div>
+      <div class="plan-btn" data-plan="plan2"></div>
+      <div class="plan-btn" data-plan="plan3"></div>
+      <div class="plan-btn" data-plan="irrigation"></div>
     </div>
 
     <div class="card" id="filtersCard" style="display:none;">
@@ -97,14 +99,9 @@ Object.entries(zones).forEach(([zoneNumber, zone]) => {
 function findZone(query) {
   const q = query.trim().toLowerCase();
   if (!q) return null;
-
-  if (cityLookup.has(q)) {
-    return cityLookup.get(q);
-  }
-
+  if (cityLookup.has(q)) return cityLookup.get(q);
   const digits = q.replace(/\D/g, "");
   if (!digits) return null;
-
   const hit = zipLookup.find(z => digits.startsWith(z.prefix));
   return hit ? hit.value : null;
 }
@@ -144,6 +141,12 @@ const atticBtn = document.getElementById("atticBtn");
 const manualWrap = document.getElementById("manualWrap");
 const manualZone = document.getElementById("manualZone");
 
+function toggleDetails(plan) {
+  const el = document.getElementById("details-" + plan);
+  if (!el) return;
+  el.style.display = (el.style.display === "none" || el.style.display === "") ? "block" : "none";
+}
+
 function renderPlans() {
   document.querySelectorAll(".plan-btn").forEach(btn => {
     const key = btn.dataset.plan;
@@ -156,50 +159,48 @@ function renderPlans() {
       irrigation:"Plan 4 – Annual Irrigation Maintenance Package"
     };
 
-  btn.innerHTML =
-  "<strong>" + labels[key] + "</strong><br><span>" +
-  formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
-  "</span>" +
+    const details = key === "plan1" ? `
+      <br><br>
+      <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan1');">View Details</button>
+      <div id="details-plan1" class="details">
+      Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
 
-  (key === "plan1" ? `
-  <br><br>
- <button type="button" onclick="event.stopPropagation(); toggleDetails('plan1');" style="margin-top:10px;background:#e2e8f0;">View Details</button>
-  
+      1. Smoke & Carbon Monoxide Detector Service<br>
+      • Test all smoke and CO detectors.<br>
+      • Replace batteries (standard detector batteries included, up to 6 units).<br>
+      • Verify proper operation and placement (visual check).<br>
+      • Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
 
-  <div id="details-plan1" style="display:none; text-align:left; margin-top:10px; font-size:14px;">
-  Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
+      2. HVAC Air Return Filter Replacement<br>
+      • Inspect existing filter condition.<br>
+      • Replace one standard 1-inch thick air return filter (included).<br>
+      • Ensure proper fit and airflow.<br>
+      • Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
 
-  1. Smoke & Carbon Monoxide Detector Service<br>
-  • Test all smoke and CO detectors.<br>
-  • Replace batteries (standard detector batteries included, up to 6 units).<br>
-  • Verify proper operation and placement (visual check).<br>
-  • Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
+      3. Plumbing Visual Inspection<br>
+      • Inspect faucets for leaks, drips, or corrosion.<br>
+      • Check under-sink plumbing and visible drain lines.<br>
+      • Identify early signs of water damage or failure.<br>
+      • Check toilet for leaks, flushing, and stability.<br><br>
 
-  2. HVAC Air Return Filter Replacement<br>
-  • Inspect existing filter condition.<br>
-  • Replace one standard 1-inch thick air return filter (included).<br>
-  • Ensure proper fit and airflow.<br>
-  • Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
+      4. Light Fixtures & Ceiling Fan Check<br>
+      • Inspect accessible interior light fixtures and ceiling fans.<br>
+      • Verify proper operation (switches, speed settings, and function).<br>
+      • Check for wobble, noise, or mounting concerns in ceiling fans.<br>
+      • Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
 
-  3. Plumbing Visual Inspection<br>
-  • Inspect faucets for leaks, drips, or corrosion.<br>
-  • Check under-sink plumbing and visible drain lines.<br>
-  • Identify early signs of water damage or failure.<br>
-  • Check toilet for leaks, flushing, and stability.<br><br>
+      5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
+      • Provide interior condition photos for homes up to 2,000 sq ft.<br>
+      • Document general condition at time of service.<br>
+      • Capture visible issues or concerns for records and reporting.<br>
+      • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
+      </div>
+    ` : "";
 
-  4. Light Fixtures & Ceiling Fan Check<br>
-  • Inspect accessible interior light fixtures and ceiling fans.<br>
-  • Verify proper operation (switches, speed settings, and function).<br>
-  • Check for wobble, noise, or mounting concerns in ceiling fans.<br>
-  • Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
-
-  5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
-  • Provide interior condition photos for homes up to 2,000 sq ft.<br>
-  • Document general condition at time of service.<br>
-  • Capture visible issues or concerns for records and reporting.<br>
-  • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
-  </div>
-  ` : "");
+    btn.innerHTML =
+      "<strong>" + labels[key] + "</strong><br><span>" +
+      formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
+      "</span>" + details;
   });
 }
 
