@@ -54,19 +54,36 @@
       <div class="plan-btn" data-plan="irrigation"></div>
     </div>
 
-    <div class="card" id="filtersCard" style="display:none;">
-      <h2>3. HVAC Filter Add-Ons</h2>
-      <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
-      <div class="row">
-        <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
-        <select id="filterType">
-          <option value="standard">Standard 1-inch</option>
-          <option value="large">Large filter</option>
-          <option value="media">Media / 4-inch</option>
-        </select>
-        <button id="atticBtn" type="button">No Attic Access Charge</button>
-      </div>
-    </div>
+   <div class="card" id="filtersCard" style="display:none;">
+  <h2>3. HVAC Filter Add-Ons</h2>
+  <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
+  <div class="row">
+    <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
+
+    <select id="filterType">
+      <option value="standard">Standard 1-inch ($25)</option>
+      <option value="large">Large filter ($35)</option>
+      <option value="media">Media / 4-inch ($75)</option>
+      <option value="16x20x4">16x20x4 Filter ($40)</option>
+      <option value="20x25x4">20x25x4 Filter ($45)</option>
+    </select>
+
+    <button id="atticBtn" type="button">No Attic Access Charge</button>
+
+    <select id="detectorType">
+      <option value="none">No detector</option>
+      <option value="hardwired">Hardwired Smoke Detector ($40)</option>
+      <option value="combo">Smoke/CO Detector ($70)</option>
+      <option value="battery">Battery Detector ($70)</option>
+    </select>
+
+    <input id="detectorQty" type="number" min="0" value="0" placeholder="Number of detectors">
+
+    <input id="extraDetectorQty" type="number" min="0" value="0" placeholder="Extra smoke detector service ($20 each additional unit)">
+
+    <input id="extraZones" type="number" min="0" value="0" placeholder="Extra irrigation zones ($38 per zone)">
+  </div>
+</div>
 
     <div class="card" id="summaryCard" style="display:none;">
       <h2>4. Quote Summary</h2>
@@ -123,7 +140,10 @@ function getBasePlanPrice(plan, adj) {
 function getFilterPrice(type) {
   if (type === "large") return 35;
   if (type === "media") return 75;
+  if (type === "16x20x4") return 40;
+  if (type === "20x25x4") return 45;
   return 25;
+}
 }
 
 let selectedPlan = "plan2";
@@ -354,20 +374,38 @@ function updateQuote() {
   const included = selectedPlan === "irrigation" ? 0 : 1;
   const extraFilters = Math.max(0, Number(filters.value || 0) - included);
   const addOn = selectedPlan === "irrigation"
-    ? 0
-    : (extraFilters * getFilterPrice(filterType.value) + (attic ? 35 : 0));
-  const total = basePrice + addOn;
+  ? 0
+  : (extraFilters * getFilterPrice(filterType.value) + (attic ? 35 : 0));
 
-  document.getElementById("basePrice").textContent = formatCurrency(basePrice);
-  document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
-  document.getElementById("totalPrice").textContent = formatCurrency(total);
+let detectorPrice = 0;
+const detectorType = document.getElementById("detectorType").value;
+const detectorQty = Number(document.getElementById("detectorQty").value || 0);
+const extraDetectorQty = Number(document.getElementById("extraDetectorQty").value || 0);
+
+if (detectorType === "hardwired") detectorPrice = 40;
+if (detectorType === "combo") detectorPrice = 70;
+if (detectorType === "battery") detectorPrice = 70;
+
+const detectorTotal = (detectorPrice * detectorQty) + (extraDetectorQty * 20);
+
+const extraZones = Number(document.getElementById("extraZones").value || 0);
+const zoneTotal = extraZones * 38;
+
+const total = basePrice + addOn + detectorTotal + zoneTotal;
+
+document.getElementById("basePrice").textContent = formatCurrency(basePrice);
+document.getElementById("addOnPrice").textContent = formatCurrency(addOn + detectorTotal + zoneTotal);
+document.getElementById("totalPrice").textContent = formatCurrency(total);
 }
 
 area.addEventListener("input", updateQuote);
 filters.addEventListener("input", updateQuote);
 filterType.addEventListener("change", updateQuote);
 manualZone.addEventListener("change", updateQuote);
-
+document.getElementById("detectorType").addEventListener("change", updateQuote);
+document.getElementById("detectorQty").addEventListener("input", updateQuote);
+document.getElementById("extraDetectorQty").addEventListener("input", updateQuote);
+document.getElementById("extraZones").addEventListener("input", updateQuote);
 atticBtn.addEventListener("click", function() {
   attic = !attic;
   atticBtn.textContent = attic ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge";
