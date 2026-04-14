@@ -59,11 +59,13 @@
       <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
       <div class="row">
         <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
-        <select id="filterType">
-          <option value="standard">Standard 1-inch</option>
-          <option value="large">Large filter</option>
-          <option value="media">Media / 4-inch</option>
-        </select>
+       <select id="filterType">
+  <option value="standard">Standard 1-inch ($25)</option>
+  <option value="large">Large filter ($35)</option>
+  <option value="media">Media / 4-inch ($75)</option>
+  <option value="16x20x4">16x20x4 Filter ($40)</option>
+  <option value="20x25x4">20x25x4 Filter ($45)</option>
+</select>
         <button id="atticBtn" type="button">No Attic Access Charge</button>
       </div>
     </div>
@@ -123,7 +125,10 @@ function getBasePlanPrice(plan, adj) {
 function getFilterPrice(type) {
   if (type === "large") return 35;
   if (type === "media") return 75;
+  if (type === "16x20x4") return 40;
+  if (type === "20x25x4") return 45;
   return 25;
+}
 }
 
 let selectedPlan = "plan2";
@@ -159,42 +164,74 @@ function renderPlans() {
       irrigation:"Plan 4 – Annual Irrigation Maintenance Package"
     };
 
-    const details = key === "plan1" ? `
-      <br><br>
-      <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan1');">View Details</button>
-      <div id="details-plan1" class="details">
-      Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
+const details = key === "plan1" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan1');">View Details</button>
+  <div id="details-plan1" class="details">
+  Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
 
-      1. Smoke & Carbon Monoxide Detector Service<br>
-      • Test all smoke and CO detectors.<br>
-      • Replace batteries (standard detector batteries included, up to 6 units).<br>
-      • Verify proper operation and placement (visual check).<br>
-      • Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
+  1. Smoke & Carbon Monoxide Detector Service<br>
+  • Test all smoke and CO detectors.<br>
+  • Replace batteries (standard detector batteries included, up to 6 units).<br>
+  • Verify proper operation and placement (visual check).<br>
+  • Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
 
-      2. HVAC Air Return Filter Replacement<br>
-      • Inspect existing filter condition.<br>
-      • Replace one standard 1-inch thick air return filter (included).<br>
-      • Ensure proper fit and airflow.<br>
-      • Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
+  2. HVAC Air Return Filter Replacement<br>
+  • Inspect existing filter condition.<br>
+  • Replace one standard 1-inch thick air return filter (included).<br>
+  • Ensure proper fit and airflow.<br>
+  • Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
 
-      3. Plumbing Visual Inspection<br>
-      • Inspect faucets for leaks, drips, or corrosion.<br>
-      • Check under-sink plumbing and visible drain lines.<br>
-      • Identify early signs of water damage or failure.<br>
-      • Check toilet for leaks, flushing, and stability.<br><br>
+  3. Plumbing Visual Inspection<br>
+  • Inspect faucets for leaks, drips, or corrosion.<br>
+  • Check under-sink plumbing and visible drain lines.<br>
+  • Identify early signs of water damage or failure.<br>
+  • Check toilet for leaks, flushing, and stability.<br><br>
 
-      4. Light Fixtures & Ceiling Fan Check<br>
-      • Inspect accessible interior light fixtures and ceiling fans.<br>
-      • Verify proper operation (switches, speed settings, and function).<br>
-      • Check for wobble, noise, or mounting concerns in ceiling fans.<br>
-      • Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
+  4. Light Fixtures & Ceiling Fan Check<br>
+  • Inspect accessible interior light fixtures and ceiling fans.<br>
+  • Verify proper operation (switches, speed settings, and function).<br>
+  • Check for wobble, noise, or mounting concerns in ceiling fans.<br>
+  • Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
 
-      5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
-      • Provide interior condition photos for homes up to 2,000 sq ft.<br>
-      • Document general condition at time of service.<br>
-      • Capture visible issues or concerns for records and reporting.<br>
-      • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
-      </div>
+  5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
+  • Provide interior condition photos for homes up to 2,000 sq ft.<br>
+  • Document general condition at time of service.<br>
+  • Capture visible issues or concerns for records and reporting.<br>
+  • Photos and findings delivered via email for professional documentation and easy record keeping.<br>
+  </div>
+` : key === "plan2" ? `
+  <br><br>
+  <button type="button" class="detail-btn" onclick="event.stopPropagation(); toggleDetails('plan2');">View Details</button>
+  <div id="details-plan2" class="details">
+
+  Includes all services in Plan 1, plus the following additional services:<br><br>
+
+  1. Water Heater Inspection & Flush<br>
+  • Inspect water heater for proper operation and visible signs of wear or leaks.<br>
+  • Check temperature/pressure relief valve (visual only).<br>
+  • Perform tank flush to remove sediment buildup, where applicable.<br>
+  • Identify potential issues or recommended maintenance (repairs or replacement quoted separately).<br><br>
+
+  2. Dryer Vent Inspection & Cleaning<br>
+  • Inspect accessible dryer vent system for lint buildup or airflow restriction.<br>
+  • Clean dryer vent as needed to improve efficiency and reduce fire risk.<br>
+  • Identify any damaged or improperly installed vent components (repairs or replacement quoted separately).<br>
+  • Roof-mounted dryer vents on 2–3 story homes will require an additional charge.<br><br>
+
+  3. Closet Door Adjustment<br>
+  • Inspect closet doors for alignment and operation.<br>
+  • Adjust tracks, rollers, or hinges as needed for proper function.<br>
+  • Improve ease of use and help prevent further wear (replacement quoted if needed).<br><br>
+
+  4. Door Hardware Maintenance<br>
+  • Lubricate door locks, latches, and hinges.<br>
+  • Tighten loose hardware including handles, strike plates, and hinges.<br>
+  • Ensure smooth operation and proper door closure (replacement quoted if needed).<br>
+
+  </div>
+` : "";
+    
     ` : "";
 
     btn.innerHTML =
