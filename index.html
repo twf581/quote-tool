@@ -163,7 +163,8 @@ function renderPlans() {
 
   (key === "plan1" ? `
   <br><br>
-  <button onclick="toggleDetails('plan1')" style="margin-top:10px;background:#e2e8f0;">View Details</button>
+ <button type="button" onclick="event.stopPropagation(); toggleDetails('plan1');" style="margin-top:10px;background:#e2e8f0;">View Details</button>
+  
 
   <div id="details-plan1" style="display:none; text-align:left; margin-top:10px; font-size:14px;">
   Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
