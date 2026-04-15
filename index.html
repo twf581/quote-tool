@@ -59,11 +59,13 @@
       <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
       <div class="row">
         <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
-        <select id="filterType">
-          <option value="standard">Standard 1-inch</option>
-          <option value="large">Large filter</option>
-          <option value="media">Media / 4-inch</option>
-        </select>
+       <select id="filterType">
+  <option value="standard">Standard 1-inch</option>
+  <option value="large">Large filter</option>
+  <option value="media">Media / 4-inch</option>
+  <option value="16x20x4">16x20x4 Filter ($40)</option>
+  <option value="20x25x4">20x25x4 Filter ($45)</option>
+</select>
         <button id="atticBtn" type="button">No Attic Access Charge</button>
       </div>
     </div>
@@ -123,7 +125,10 @@ function getBasePlanPrice(plan, adj) {
 function getFilterPrice(type) {
   if (type === "large") return 35;
   if (type === "media") return 75;
+  if (type === "16x20x4") return 40;
+  if (type === "20x25x4") return 45;
   return 25;
+}
 }
 
 let selectedPlan = "plan2";
