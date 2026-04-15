@@ -57,8 +57,8 @@
     </div>
 
     <div class="card" id="filtersCard" style="display:none;">
-      <h2>3. HVAC Filter Add-Ons</h2>
-      <p class="note">Plan includes 1 standard filter. Extra filters and attic access are added automatically.</p>
+     <h2>3. Add-Ons & Materials</h2>
+    <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is included with applicable maintenance plans.</p> 
       <div class="row">
         <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
 
@@ -423,7 +423,7 @@ function updateQuote() {
 
   plansCard.style.display = "block";
   summaryCard.style.display = "block";
-  filtersCard.style.display = selectedPlan === "irrigation" ? "none" : "block";
+  filtersCard.style.display = "block";
 
   renderPlans();
 
@@ -432,19 +432,21 @@ function updateQuote() {
   const filterCountNum = Number(document.getElementById("filters").value || 0);
   const selectedFilterType = document.getElementById("filterType").value;
 
-  let filterMaterialTotal = 0;
-  if (selectedPlan !== "irrigation") {
-    if (
-      selectedFilterType === "16x20x4" ||
-      selectedFilterType === "20x25x4" ||
-      selectedFilterType === "media"
-    ) {
-      filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
-    } else {
-      const extraFilters = Math.max(0, filterCountNum - 1);
-      filterMaterialTotal = extraFilters * getFilterPrice(selectedFilterType);
-    }
+let filterMaterialTotal = 0;
+if (selectedPlan !== "irrigation") {
+  if (
+    selectedFilterType === "16x20x4" ||
+    selectedFilterType === "20x25x4" ||
+    selectedFilterType === "media"
+  ) {
+    // all 4-inch filters are always extra, even quantity 1
+    filterMaterialTotal = Math.max(0, filterCountNum) * getFilterPrice(selectedFilterType);
+  } else {
+    // one standard 1-inch filter included
+    const extraFilters = Math.max(0, filterCountNum - 1);
+    filterMaterialTotal = extraFilters * getFilterPrice(selectedFilterType);
   }
+}
 
   let detectorPrice = 0;
   const detectorType = document.getElementById("detectorType").value;
