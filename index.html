@@ -558,7 +558,30 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
   });
 });
 
+
 updateQuote();
+
+function generateQuote() {
+  const name = document.getElementById("customerName")?.value || "Customer";
+  const total = document.getElementById("totalPrice").textContent;
+
+  const text =
+`Mobile Onsite Handyman Services
+
+Quote for: ${name}
+
+Selected Plan: ${selectedPlan}
+
+Total: ${total}
+
+Includes maintenance service, add-ons, and applicable taxes.
+
+Thank you for choosing Mobile Onsite Handyman Services.`;
+
+  document.getElementById("quoteOutput").value = text;
+}
+
+
 </script>
 </body>
 </html>
