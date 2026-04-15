@@ -100,6 +100,23 @@
   <label for="extraZones">Extra irrigation zones ($38 per zone)</label>
   <input id="extraZones" type="number" min="0" value="" placeholder="Enter quantity">
 </div>
+
+
+
+<div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+  <strong>Property Manager Photos</strong>
+
+  <label>
+    <input id="pmPhotos" type="checkbox" style="width:auto; margin-right:8px;">
+    Include interior condition photos
+  </label>
+
+  <label for="homeSqft">Home size (sq ft)</label>
+  <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
+</div>
+
+
+</div>     
     </div>
 
     <div class="card" id="summaryCard" style="display:none;">
@@ -133,7 +150,7 @@
       <div class="small" style="margin-top:12px;">
         Tax applies to materials only.
       </div>
-    </div>
+    </div> 
   </div>
 
 <script>
@@ -470,6 +487,24 @@ if (selectedPlan !== "irrigation") {
   const batteryServiceQty = Number(document.getElementById("batteryServiceQty").value || 0);
   const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
   const extraZones = Number(document.getElementById("extraZones").value || 0);
+  const pmPhotos = document.getElementById("pmPhotos").checked;
+const homeSqft = Number(document.getElementById("homeSqft").value || 0);
+
+let pmPhotoTotal = 0;
+
+if (pmPhotos) {
+  if (homeSqft <= 2000) {
+    pmPhotoTotal = 30;
+  } else if (homeSqft <= 3000) {
+    pmPhotoTotal = 45;
+  } else if (homeSqft <= 4000) {
+    pmPhotoTotal = 60;
+  } else {
+    pmPhotoTotal = 60;
+  }
+
+  pmPhotoTotal += currentZone ? currentZone.adjustment : 0;
+}
 
   if (detectorType === "hardwired") detectorPrice = 40;
   if (detectorType === "combo") detectorPrice = 70;
@@ -481,7 +516,8 @@ if (selectedPlan !== "irrigation") {
   const atticServiceTotal = attic ? 35 : 0;
 
   const materialSubtotal = filterMaterialTotal + detectorMaterialTotal;
-  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal;
+ 
+  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal;
   const materialsTax = materialSubtotal * taxRate;
   const addOn = materialSubtotal + serviceSubtotal + materialsTax;
   const total = basePrice + addOn;
@@ -504,6 +540,8 @@ document.getElementById("extraDetectorQty").addEventListener("input", updateQuot
 document.getElementById("batteryServiceQty").addEventListener("input", updateQuote);
 document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);
 document.getElementById("extraZones").addEventListener("input", updateQuote);
+document.getElementById("pmPhotos").addEventListener("change", updateQuote);
+document.getElementById("homeSqft").addEventListener("input", updateQuote);  
 
 atticBtn.addEventListener("click", function() {
   attic = !attic;
