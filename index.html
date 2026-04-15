@@ -350,52 +350,54 @@ function updateQuote() {
   renderPlans();
 
   const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
-  const included = selectedPlan === "irrigation" ? 0 : 1;
-  const extraFilters = Math.max(0, Number(filters.value || 0) - included);
+
   const filterCountNum = Number(filters.value || 0);
+  let filterAddOn = 0;
 
-let filterAddOn = 0;
-
-if (selectedPlan !== "irrigation") {
-  if (
-    filterType.value === "16x20x4" ||
-    filterType.value === "20x25x4" ||
-    filterType.value === "media"
-  ) {
-    filterAddOn = filterCountNum * getFilterPrice(filterType.value);
-  } else {
-    const extraFilters = Math.max(0, filterCountNum - 1);
-    filterAddOn = extraFilters * getFilterPrice(filterType.value);
+  if (selectedPlan !== "irrigation") {
+    if (
+      filterType.value === "16x20x4" ||
+      filterType.value === "20x25x4" ||
+      filterType.value === "media"
+    ) {
+      filterAddOn = filterCountNum * getFilterPrice(filterType.value);
+    } else {
+      const extraFilters = Math.max(0, filterCountNum - 1);
+      filterAddOn = extraFilters * getFilterPrice(filterType.value);
+    }
   }
+
+  let detectorPrice = 0;
+  const detectorTypeEl = document.getElementById("detectorType");
+  const detectorQtyEl = document.getElementById("detectorQty");
+  const extraDetectorQtyEl = document.getElementById("extraDetectorQty");
+  const batteryServiceQtyEl = document.getElementById("batteryServiceQty");
+  const detectorLaborQtyEl = document.getElementById("detectorLaborQty");
+
+  const detectorType = detectorTypeEl ? detectorTypeEl.value : "none";
+  const detectorQty = detectorQtyEl ? Number(detectorQtyEl.value || 0) : 0;
+  const extraDetectorQty = extraDetectorQtyEl ? Number(extraDetectorQtyEl.value || 0) : 0;
+  const batteryServiceQty = batteryServiceQtyEl ? Number(batteryServiceQtyEl.value || 0) : 0;
+  const detectorLaborQty = detectorLaborQtyEl ? Number(detectorLaborQtyEl.value || 0) : 0;
+
+  if (detectorType === "hardwired") detectorPrice = 40;
+  if (detectorType === "combo") detectorPrice = 70;
+  if (detectorType === "battery") detectorPrice = 70;
+
+  const detectorMaterialTotal = detectorPrice * detectorQty;
+  const detectorServiceTotal = (extraDetectorQty * 20) + (batteryServiceQty * 22) + (detectorLaborQty * 45);
+
+  const materialSubtotal = filterAddOn + detectorMaterialTotal;
+  const serviceSubtotal = detectorServiceTotal + (attic ? 35 : 0);
+  const materialsTax = materialSubtotal * taxRate;
+
+  const addOn = materialSubtotal + serviceSubtotal + materialsTax;
+  const total = basePrice + addOn;
+
+  document.getElementById("basePrice").textContent = formatCurrency(basePrice);
+  document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
+  document.getElementById("totalPrice").textContent = formatCurrency(total);
 }
-
-let detectorPrice = 0;
-const detectorType = document.getElementById("detectorType").value;
-const detectorQty = Number(document.getElementById("detectorQty").value || 0);
-const extraDetectorQty = Number(document.getElementById("extraDetectorQty").value || 0);
-const batteryServiceQty = Number(document.getElementById("batteryServiceQty").value || 0);
-const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
-
-if (detectorType === "hardwired") detectorPrice = 40;
-if (detectorType === "combo") detectorPrice = 70;
-if (detectorType === "battery") detectorPrice = 70;
-
-const detectorMaterialTotal = detectorPrice * detectorQty;
-const detectorServiceTotal = (extraDetectorQty * 20) + (batteryServiceQty * 22) + (detectorLaborQty * 45);
-
-const materialSubtotal = filterAddOn + detectorMaterialTotal;
-const serviceSubtotal = detectorServiceTotal + (attic ? 35 : 0);
-const materialsTax = materialSubtotal * taxRate;
-
-const addOn = materialSubtotal + serviceSubtotal + materialsTax;
-  
-const total = basePrice + addOn;
-
-document.getElementById("detectorType").addEventListener("change", updateQuote);
-document.getElementById("detectorQty").addEventListener("input", updateQuote);
-document.getElementById("extraDetectorQty").addEventListener("input", updateQuote);
-document.getElementById("batteryServiceQty").addEventListener("input", updateQuote);
-document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);  
 }
 
 area.addEventListener("input", updateQuote);
