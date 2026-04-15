@@ -74,9 +74,13 @@
   <option value="battery">Battery Detector ($70)</option>
 </select>
 
-<input id="detectorQty" type="number" min="0" value="0" placeholder="Number of detectors">
+ <input id="detectorQty" type="number" min="0" value="0" placeholder="Number of detectors">
+
+<input id="extraDetectorQty" type="number" min="0" value="0" placeholder="Extra smoke detector service ($20 each additional unit)">
+
 <input id="batteryServiceQty" type="number" min="0" value="0" placeholder="Extra detector battery service ($22 each)">
-<input id="detectorLaborQty" type="number" min="0" value="0" placeholder="Detector replacement labor ($45 each)">        
+
+<input id="detectorLaborQty" type="number" min="0" value="0" placeholder="Detector replacement labor ($45 each)">      
       </div>
     </div>
 
@@ -405,8 +409,10 @@ filters.addEventListener("input", updateQuote);
 filterType.addEventListener("change", updateQuote);
 manualZone.addEventListener("change", updateQuote);
 document.getElementById("detectorType").addEventListener("change", updateQuote);
-document.getElementById("detectorQty").addEventListener("input", updateQuote);  
-
+document.getElementById("detectorQty").addEventListener("input", updateQuote);
+document.getElementById("extraDetectorQty").addEventListener("input", updateQuote);
+document.getElementById("batteryServiceQty").addEventListener("input", updateQuote);
+document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);
 atticBtn.addEventListener("click", function() {
   attic = !attic;
   atticBtn.textContent = attic ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge";
