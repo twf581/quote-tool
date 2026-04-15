@@ -74,7 +74,9 @@
   <option value="battery">Battery Detector ($70)</option>
 </select>
 
-<input id="detectorQty" type="number" min="0" value="0" placeholder="Number of detectors">      
+<input id="detectorQty" type="number" min="0" value="0" placeholder="Number of detectors">
+<input id="batteryServiceQty" type="number" min="0" value="0" placeholder="Extra detector battery service ($22 each)">
+<input id="detectorLaborQty" type="number" min="0" value="0" placeholder="Detector replacement labor ($45 each)">        
       </div>
     </div>
 
@@ -90,6 +92,7 @@
 
 <script>
 const basePlans = { plan1:165, plan2:250, plan3:365, irrigation:159 };
+const taxRate = 0.0875;  
 
 const zones = {
   1:{ name:"Zone 1", label:"Budget", adjustment:0, cities:["moreno valley","perris","hemet","san bernardino"], zipPrefixes:["92557","92553","92543","92544","92545","924"] },
@@ -369,19 +372,30 @@ if (selectedPlan !== "irrigation") {
 let detectorPrice = 0;
 const detectorType = document.getElementById("detectorType").value;
 const detectorQty = Number(document.getElementById("detectorQty").value || 0);
+const extraDetectorQty = Number(document.getElementById("extraDetectorQty").value || 0);
+const batteryServiceQty = Number(document.getElementById("batteryServiceQty").value || 0);
+const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
 
 if (detectorType === "hardwired") detectorPrice = 40;
 if (detectorType === "combo") detectorPrice = 70;
 if (detectorType === "battery") detectorPrice = 70;
 
-const detectorTotal = detectorPrice * detectorQty;
+const detectorMaterialTotal = detectorPrice * detectorQty;
+const detectorServiceTotal = (extraDetectorQty * 20) + (batteryServiceQty * 22) + (detectorLaborQty * 45);
 
-const addOn = filterAddOn + detectorTotal + (attic ? 35 : 0);
-  const total = basePrice + addOn;
+const materialSubtotal = filterAddOn + detectorMaterialTotal;
+const serviceSubtotal = detectorServiceTotal + (attic ? 35 : 0);
+const materialsTax = materialSubtotal * taxRate;
 
-  document.getElementById("basePrice").textContent = formatCurrency(basePrice);
-  document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
-  document.getElementById("totalPrice").textContent = formatCurrency(total);
+const addOn = materialSubtotal + serviceSubtotal + materialsTax;
+  
+const total = basePrice + addOn;
+
+document.getElementById("detectorType").addEventListener("change", updateQuote);
+document.getElementById("detectorQty").addEventListener("input", updateQuote);
+document.getElementById("extraDetectorQty").addEventListener("input", updateQuote);
+document.getElementById("batteryServiceQty").addEventListener("input", updateQuote);
+document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);  
 }
 
 area.addEventListener("input", updateQuote);
