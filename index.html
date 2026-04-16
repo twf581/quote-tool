@@ -49,8 +49,8 @@
     </div>
 
     <div class="card">
-      <h2>1. Property Area</h2>
-      <input id="area" placeholder="Enter city or ZIP code">
+     <h2>1. Property ZIP Code</h2>
+     <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter property ZIP code to detect pricing zone</div>
       <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter city or ZIP to detect pricing zone</div>
       <div style="margin-top:12px;" id="manualWrap" hidden>
         <select id="manualZone">
@@ -170,6 +170,9 @@
       </button>
 
       <textarea id="quoteOutput" style="height:140px;"></textarea>
+      <button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">
+  Open Text Message
+</button>
     </div>
   </div>
 
@@ -659,6 +662,17 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
 });
 
 updateQuote();
+ function sendTextMessage() {
+  const phone = document.getElementById("customerPhone")?.value || "";
+  const quoteText = document.getElementById("quoteOutput")?.value || "";
+
+  const cleanedPhone = phone.replace(/\D/g, "");
+  const smsLink = cleanedPhone
+    ? `sms:${cleanedPhone}?body=${encodeURIComponent(quoteText)}`
+    : `sms:?body=${encodeURIComponent(quoteText)}`;
+
+  window.location.href = smsLink;
+} 
 </script>
 </body>
 </html>
