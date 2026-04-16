@@ -178,10 +178,57 @@ const basePlans = { plan1:185, plan2:275, plan3:395, irrigation:179 };
 const taxRate = 0.0875;
 
 const zones = {
-  1:{ name:"Zone 1", label:"Budget", adjustment:0, cities:["moreno valley","perris","hemet","san bernardino"], zipPrefixes:["92557","92553","92543","92544","92545","924"] },
-  2:{ name:"Zone 2", label:"Standard", adjustment:20, cities:["riverside","menifee","fontana","rialto","ontario","corona"], zipPrefixes:["92501","92584","92335","92336","92337","92376","91761","92879","92880","92881"] },
-  3:{ name:"Zone 3", label:"Premium", adjustment:45, cities:["temecula","murrieta","rancho cucamonga","chino hills","fallbrook"], zipPrefixes:["92590","92591","92592","92562","92563","91730","91737","91739","91709","92028"] },
-  4:{ name:"Zone 4", label:"Coastal", adjustment:95, cities:["newport beach","laguna beach","dana point","san clemente","irvine","carlsbad","encinitas","del mar","la jolla"], zipPrefixes:["92660","92661","92662","92663","92651","92629","92672","92673","92602","92603","92008","92024","92014","92037"] }
+  1:{
+    name:"Zone 1",
+    label:"Budget",
+    adjustment:0,
+    cities:["moreno valley","perris","hemet","san bernardino"],
+    zipPrefixes:[
+      "92557","92553","92543","92544","92545","924",
+      "92551","92555","92570","92571","92220","92223",
+      "92324","92552","92554","92556"
+    ]
+  },
+
+  2:{
+    name:"Zone 2",
+    label:"Standard",
+    adjustment:20,
+    cities:["riverside","menifee","fontana","rialto","ontario","corona"],
+    zipPrefixes:[
+      "92501","92584","92335","92336","92337","92376","91761",
+      "92879","92880","92881",
+      "92503","92504","92505","92506","92507","92508","92509",
+      "92586","92595","92585","92373","92313","92883"
+    ]
+  },
+
+  3:{
+    name:"Zone 3",
+    label:"Premium",
+    adjustment:45,
+    cities:["temecula","murrieta","rancho cucamonga","chino hills","fallbrook"],
+    zipPrefixes:[
+      "92590","92591","92592","92562","92563",
+      "91730","91737","91739","91709","92028",
+      "91784","92860","92564","92593"
+    ]
+  },
+
+  4:{
+    name:"Zone 4",
+    label:"Coastal",
+    adjustment:95,
+    cities:["newport beach","laguna beach","dana point","san clemente","irvine","carlsbad","encinitas","del mar","la jolla"],
+    zipPrefixes:[
+      "92660","92661","92662","92663","92651","92629",
+      "92672","92673","92602","92603",
+      "92008","92024","92014","92037",
+      "92657","92604","92606","92612","92614",
+      "92618","92620","92691","92692",
+      "92009","92067"
+    ]
+  }
 };
 
 const planTitles = {
