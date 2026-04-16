@@ -75,7 +75,8 @@
      <h2>3. Add-Ons & Materials</h2>
     <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is included with applicable maintenance plans.</p> 
       <div class="row">
-        <input id="filters" type="number" min="1" value="1" placeholder="Filter count">
+    <label for="filters">Extra filters needed (1 standard filter is already included)</label>
+<input id="filters" type="number" min="0" value="" placeholder="Enter extra quantity">    
 
         <select id="filterType">
           <option value="standard">Standard 1-inch</option>
@@ -494,8 +495,21 @@ if (selectedPlan !== "irrigation") {
     // all 4-inch filters are always extra, even quantity 1
     filterMaterialTotal = Math.max(0, filterCountNum) * getFilterPrice(selectedFilterType);
   } else {
-    // one standard 1-inch filter included
-    const extraFilters = Math.max(0, filterCountNum - 1);
+    /const filterCountNum = Number(filters.value || 0);
+let filterMaterialTotal = 0;
+
+if (selectedPlan !== "irrigation") {
+  if (
+    selectedFilterType === "16x20x4" ||
+    selectedFilterType === "20x25x4" ||
+    selectedFilterType === "media"
+  ) {
+    filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
+  } else {
+    filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
+  }
+}/ one standard 1-inch filter included
+    
     filterMaterialTotal = extraFilters * getFilterPrice(selectedFilterType);
   }
 }
