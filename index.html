@@ -9,7 +9,7 @@
     .wrap { max-width:900px; margin:0 auto; }
     .hero { background:linear-gradient(90deg,#0f172a,#047857); color:white; border-radius:24px; padding:24px; margin-bottom:16px; }
     .card { background:white; border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); }
-    input, select, button { width:100%; padding:14px; border-radius:14px; border:1px solid #cbd5e1; font-size:16px; box-sizing:border-box; }
+    input, select, button, textarea { width:100%; padding:14px; border-radius:14px; border:1px solid #cbd5e1; font-size:16px; box-sizing:border-box; margin-top:6px; margin-bottom:10px; }
     button { cursor:pointer; }
     .plan-btn { text-align:left; background:white; margin-bottom:10px; padding:14px; border-radius:14px; border:1px solid #cbd5e1; cursor:pointer; }
     .plan-btn.active { border:2px solid #059669; background:#ecfdf5; }
@@ -23,6 +23,8 @@
     .detail-btn { margin-top:10px; background:#e2e8f0; }
     .summary-grid { display:grid; gap:12px; }
     .small { font-size:14px; color:#475569; }
+    .inline-checkbox { width:auto; margin-right:8px; }
+    label { display:block; font-weight:600; margin-top:8px; }
   </style>
 </head>
 <body>
@@ -32,20 +34,19 @@
       <h1 style="margin:8px 0 4px 0;">Mobile Onsite Handyman Services LLC</h1>
       <p style="margin:0;opacity:.9;">Property maintenance plans priced by service area</p>
     </div>
-   <div class="card">
-  <h2>Customer Information</h2>
 
-  <label for="customerName">Customer Name</label>
-  <input id="customerName" type="text" placeholder="Enter customer name">
+    <div class="card">
+      <h2>Customer Information</h2>
 
-  <label for="customerPhone">Phone Number</label>
-  <input id="customerPhone" type="text" placeholder="Enter phone number">
+      <label for="customerName">Customer Name</label>
+      <input id="customerName" type="text" placeholder="Enter customer name">
 
-  <label for="customerAddress">Property Address</label>
-  <input id="customerAddress" type="text" placeholder="Enter property address">
-</div>
+      <label for="customerPhone">Phone Number</label>
+      <input id="customerPhone" type="text" placeholder="Enter phone number">
 
-
+      <label for="customerAddress">Property Address</label>
+      <input id="customerAddress" type="text" placeholder="Enter property address">
+    </div>
 
     <div class="card">
       <h2>1. Property Area</h2>
@@ -71,67 +72,65 @@
     </div>
 
     <div class="card" id="filtersCard" style="display:none;">
-     <h2>3. Add-Ons & Materials</h2>
-    <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is included with applicable maintenance plans.</p> 
-      <div class="row">
-    <label for="filters">Extra filters needed (1 standard filter is already included)</label>
-<input id="filters" type="number" min="0" value="" placeholder="Enter extra quantity">    
+      <h2>3. Add-Ons & Materials</h2>
+      <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is already included in applicable plans, so only enter extra filters here.</p>
 
-        <select id="filterType">
-          <option value="standard">Standard 1-inch</option>
-          <option value="large">Large filter</option>
-          <option value="media">Media / 4-inch ($75)</option>
-          <option value="16x20x4">16x20x4 Filter ($40)</option>
-          <option value="20x25x4">20x25x4 Filter ($45)</option>
-        </select>
+      <label for="filters">Extra filters needed (1 standard filter is already included)</label>
+      <input id="filters" type="number" min="0" value="" placeholder="Enter extra quantity">
 
-        <button id="atticBtn" type="button">No Attic Access Charge</button>
+      <label for="filterType">Filter type</label>
+      <select id="filterType">
+        <option value="standard">Standard 1-inch</option>
+        <option value="large">Large filter</option>
+        <option value="media">Media / 4-inch ($75)</option>
+        <option value="16x20x4">16x20x4 Filter ($40)</option>
+        <option value="20x25x4">20x25x4 Filter ($45)</option>
+      </select>
 
+      <button id="atticBtn" type="button">No Attic Access Charge</button>
+
+      <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+        <strong>Smoke / CO Detector Services</strong>
+
+        <label for="detectorType">Detector type</label>
         <select id="detectorType">
           <option value="none">No detector add-on</option>
           <option value="hardwired">Hardwired Smoke Detector ($40 + tax)</option>
           <option value="combo">Smoke/CO Detector ($70 + tax)</option>
           <option value="battery">Battery Detector ($70 + tax)</option>
         </select>
-<div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-  <strong>Smoke / CO Detector Services</strong>
 
-  <label for="detectorQty">Number of detectors</label>
-  <input id="detectorQty" type="number" min="0" value="" placeholder="Enter quantity">
+        <label for="detectorQty">Number of detectors</label>
+        <input id="detectorQty" type="number" min="0" value="" placeholder="Enter quantity">
 
-  <label for="extraDetectorQty">Extra detector service ($20 each additional unit)</label>
-  <input id="extraDetectorQty" type="number" min="0" value="" placeholder="Enter quantity">
+        <label for="extraDetectorQty">Extra detector service ($20 each additional unit)</label>
+        <input id="extraDetectorQty" type="number" min="0" value="" placeholder="Enter quantity">
 
-  <label for="batteryServiceQty">Extra detector battery service ($22 each)</label>
-  <input id="batteryServiceQty" type="number" min="0" value="" placeholder="Enter quantity">
+        <label for="batteryServiceQty">Extra detector battery service ($22 each)</label>
+        <input id="batteryServiceQty" type="number" min="0" value="" placeholder="Enter quantity">
 
-  <label for="detectorLaborQty">Detector replacement labor ($45 each)</label>
-  <input id="detectorLaborQty" type="number" min="0" value="" placeholder="Enter quantity">
-</div>
+        <label for="detectorLaborQty">Detector replacement labor ($45 each)</label>
+        <input id="detectorLaborQty" type="number" min="0" value="" placeholder="Enter quantity">
+      </div>
 
-<div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-  <strong>Irrigation Add-Ons</strong>
+      <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+        <strong>Irrigation Add-Ons</strong>
 
-  <label for="extraZones">Extra irrigation zones ($38 per zone)</label>
-  <input id="extraZones" type="number" min="0" value="" placeholder="Enter quantity">
-</div>
+        <label for="extraZones">Extra irrigation zones ($38 per zone)</label>
+        <input id="extraZones" type="number" min="0" value="" placeholder="Enter quantity">
+      </div>
 
+      <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+        <strong>Property Manager Photos</strong>
 
+        <label>
+          <input id="pmPhotos" type="checkbox" class="inline-checkbox">
+          Include interior condition photos
+        </label>
 
-<div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-  <strong>Property Manager Photos</strong>
-
-  <label>
-    <input id="pmPhotos" type="checkbox" style="width:auto; margin-right:8px;">
-    Include interior condition photos
-  </label>
-
-  <label for="homeSqft">Home size (sq ft)</label>
-  <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
-</div>
-
-
-</div>     
+        <label for="homeSqft">Home size (sq ft)</label>
+        <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
+      </div>
     </div>
 
     <div class="card" id="summaryCard" style="display:none;">
@@ -142,11 +141,11 @@
           <div class="big" id="basePrice">$0</div>
         </div>
         <div class="graybox">
-          <div class="muted">Materials subtotal</div>
+          <div class="muted">Materials (filters + detectors)</div>
           <div class="big" id="materialsSubtotal">$0</div>
         </div>
         <div class="graybox">
-          <div class="muted">Service / labor subtotal</div>
+          <div class="muted">Service & labor</div>
           <div class="big" id="serviceSubtotal">$0</div>
         </div>
         <div class="graybox">
@@ -158,23 +157,24 @@
           <div class="big" id="addOnPrice">$0</div>
         </div>
         <div class="greenbox">
-          <div class="muted" style="color:#047857;">Total quote</div>
+          <div class="muted" style="color:#047857;">Estimated total</div>
           <div class="big" id="totalPrice">$0</div>
-       <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">
-  Generate Quote Text
-</button>
-
-<textarea id="quoteOutput" style="margin-top:10px; width:100%; height:120px;"></textarea>   
         </div>
       </div>
       <div class="small" style="margin-top:12px;">
         Tax applies to materials only.
       </div>
-    </div> 
+
+      <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">
+        Generate Quote Text
+      </button>
+
+      <textarea id="quoteOutput" style="height:140px;"></textarea>
+    </div>
   </div>
 
 <script>
-const basePlans = { plan1:165, plan2:250, plan3:365, irrigation:159 };
+const basePlans = { plan1:185, plan2:275, plan3:395, irrigation:179 };
 const taxRate = 0.0875;
 
 const zones = {
@@ -185,10 +185,17 @@ const zones = {
 };
 
 const planTitles = {
-  plan1: "Plan 1 – Essential Maintenance Package ($165)",
-  plan2: "Plan 2 – Enhanced Maintenance Package ($250)",
-  plan3: "Plan 3 – Comprehensive Property Care ($365)",
-  irrigation: "Plan 4 – Annual Irrigation Maintenance Package ($159 Standalone)"
+  plan1: "Plan 1 – Essential Maintenance Package ($185)",
+  plan2: "Plan 2 – Enhanced Maintenance Package ($275)",
+  plan3: "Plan 3 – Comprehensive Property Care ($395)",
+  irrigation: "Plan 4 – Annual Irrigation Maintenance Package ($179 Standalone)"
+};
+
+const planDisplayNames = {
+  plan1: "Plan 1 – Essential Maintenance Package",
+  plan2: "Plan 2 – Enhanced Maintenance Package",
+  plan3: "Plan 3 – Comprehensive Property Care",
+  irrigation: "Plan 4 – Annual Irrigation Maintenance Package"
 };
 
 const planDetails = {
@@ -484,34 +491,10 @@ function updateQuote() {
   const filterCountNum = Number(document.getElementById("filters").value || 0);
   const selectedFilterType = document.getElementById("filterType").value;
 
-let filterMaterialTotal = 0;
-if (selectedPlan !== "irrigation") {
-  if (
-    selectedFilterType === "16x20x4" ||
-    selectedFilterType === "20x25x4" ||
-    selectedFilterType === "media"
-  ) {
-    // all 4-inch filters are always extra, even quantity 1
-    filterMaterialTotal = Math.max(0, filterCountNum) * getFilterPrice(selectedFilterType);
-  } else {
-    /const filterCountNum = Number(filters.value || 0);
-let filterMaterialTotal = 0;
-
-if (selectedPlan !== "irrigation") {
-  if (
-    selectedFilterType === "16x20x4" ||
-    selectedFilterType === "20x25x4" ||
-    selectedFilterType === "media"
-  ) {
-    filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
-  } else {
+  let filterMaterialTotal = 0;
+  if (selectedPlan !== "irrigation") {
     filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
   }
-}/ one standard 1-inch filter included
-    
-    filterMaterialTotal = extraFilters * getFilterPrice(selectedFilterType);
-  }
-}
 
   let detectorPrice = 0;
   const detectorType = document.getElementById("detectorType").value;
@@ -520,24 +503,6 @@ if (selectedPlan !== "irrigation") {
   const batteryServiceQty = Number(document.getElementById("batteryServiceQty").value || 0);
   const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
   const extraZones = Number(document.getElementById("extraZones").value || 0);
-  const pmPhotos = document.getElementById("pmPhotos").checked;
-const homeSqft = Number(document.getElementById("homeSqft").value || 0);
-
-let pmPhotoTotal = 0;
-
-if (pmPhotos) {
-  if (homeSqft <= 2000) {
-    pmPhotoTotal = 30;
-  } else if (homeSqft <= 3000) {
-    pmPhotoTotal = 45;
-  } else if (homeSqft <= 4000) {
-    pmPhotoTotal = 60;
-  } else {
-    pmPhotoTotal = 60;
-  }
-
-  pmPhotoTotal += currentZone ? currentZone.adjustment : 0;
-}
 
   if (detectorType === "hardwired") detectorPrice = 40;
   if (detectorType === "combo") detectorPrice = 70;
@@ -545,11 +510,28 @@ if (pmPhotos) {
 
   const detectorMaterialTotal = detectorPrice * detectorQty;
   const detectorServiceTotal = (extraDetectorQty * 20) + (batteryServiceQty * 22) + (detectorLaborQty * 45);
+
+  const pmPhotos = document.getElementById("pmPhotos").checked;
+  const homeSqft = Number(document.getElementById("homeSqft").value || 0);
+
+  let pmPhotoTotal = 0;
+  if (pmPhotos) {
+    if (homeSqft <= 2000) {
+      pmPhotoTotal = 30;
+    } else if (homeSqft <= 3000) {
+      pmPhotoTotal = 45;
+    } else if (homeSqft <= 4000) {
+      pmPhotoTotal = 60;
+    } else {
+      pmPhotoTotal = 60;
+    }
+    pmPhotoTotal += currentZone ? currentZone.adjustment : 0;
+  }
+
   const irrigationServiceTotal = extraZones * 38;
   const atticServiceTotal = attic ? 35 : 0;
 
   const materialSubtotal = filterMaterialTotal + detectorMaterialTotal;
- 
   const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal;
   const materialsTax = materialSubtotal * taxRate;
   const addOn = materialSubtotal + serviceSubtotal + materialsTax;
@@ -563,6 +545,44 @@ if (pmPhotos) {
   document.getElementById("totalPrice").textContent = formatCurrency(total);
 }
 
+function generateQuote() {
+  const customerName = document.getElementById("customerName")?.value || "Customer";
+  const customerPhone = document.getElementById("customerPhone")?.value || "";
+  const customerAddress = document.getElementById("customerAddress")?.value || "";
+  const total = document.getElementById("totalPrice").textContent;
+  const base = document.getElementById("basePrice").textContent;
+  const materials = document.getElementById("materialsSubtotal").textContent;
+  const service = document.getElementById("serviceSubtotal").textContent;
+  const tax = document.getElementById("materialsTax").textContent;
+  const planLabel = planDisplayNames[selectedPlan] || selectedPlan;
+
+  const text =
+`Mobile Onsite Handyman Services LLC
+
+Quote For: ${customerName}
+Phone: ${customerPhone}
+Property Address: ${customerAddress}
+
+Selected Service:
+${planLabel}
+
+Pricing Breakdown:
+Base Plan: ${base}
+Materials: ${materials}
+Service & Labor: ${service}
+Materials Tax (8.75%): ${tax}
+
+Estimated Total: ${total}
+
+This quote is based on the selected plan, add-ons, property size, and service area.
+
+Call or text for same week service:
+951-388-4744
+mobileonsitehandyman@gmail.com`;
+
+  document.getElementById("quoteOutput").value = text;
+}
+
 area.addEventListener("input", updateQuote);
 filters.addEventListener("input", updateQuote);
 filterType.addEventListener("change", updateQuote);
@@ -574,7 +594,7 @@ document.getElementById("batteryServiceQty").addEventListener("input", updateQuo
 document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);
 document.getElementById("extraZones").addEventListener("input", updateQuote);
 document.getElementById("pmPhotos").addEventListener("change", updateQuote);
-document.getElementById("homeSqft").addEventListener("input", updateQuote);  
+document.getElementById("homeSqft").addEventListener("input", updateQuote);
 
 atticBtn.addEventListener("click", function() {
   attic = !attic;
@@ -591,30 +611,7 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
   });
 });
 
-
 updateQuote();
-
-function generateQuote() {
-  const name = document.getElementById("customerName")?.value || "Customer";
-  const total = document.getElementById("totalPrice").textContent;
-
-  const text =
-`Mobile Onsite Handyman Services
-
-Quote for: ${name}
-
-Selected Plan: ${selectedPlan}
-
-Total: ${total}
-
-Includes maintenance service, add-ons, and applicable taxes.
-
-Thank you for choosing Mobile Onsite Handyman Services.`;
-
-  document.getElementById("quoteOutput").value = text;
-}
-
-
 </script>
 </body>
 </html>
