@@ -694,8 +694,19 @@ function sendTextMessage() {
 
 function copyQuote() {
   const text = document.getElementById("quoteOutput").value;
-  navigator.clipboard.writeText(text);
-  alert("Quote copied");
+
+  if (!text) {
+    alert("Generate the quote first.");
+    return;
+  }
+
+  try {
+    navigator.clipboard.writeText(text);
+    alert("Quote copied — paste with CTRL + V");
+  } catch (err) {
+    alert("Copy not supported — manually copy from the box.");
+  }
+
 }
 
 </script>
