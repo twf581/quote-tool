@@ -175,6 +175,9 @@
 
       <textarea id="quoteOutput" style="height:140px;"></textarea>
       <button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">
+     <button onclick="copyQuote()" style="margin-top:10px; padding:12px; background:#64748b; color:white; border:none; border-radius:12px;">
+  Copy Quote
+</button>   
   Open Text Message
 </button>
     </div>
@@ -666,16 +669,35 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
 });
 
 updateQuote();
- function sendTextMessage() {
+
+function sendTextMessage() {
   const phone = document.getElementById("customerPhone")?.value || "";
   const quoteText = document.getElementById("quoteOutput")?.value || "";
 
+  if (!quoteText) {
+    alert("Generate the quote first.");
+    return;
+  }
+
+  if (!phone) {
+    alert("Enter customer phone number.");
+    return;
+  }
+
   const cleanedPhone = phone.replace(/\D/g, "");
-  const smsLink = cleanedPhone
-    ? `sms:${cleanedPhone}?body=${encodeURIComponent(quoteText)}`
-    : `sms:?body=${encodeURIComponent(quoteText)}`;
+  const smsLink = `sms:${cleanedPhone}?body=${encodeURIComponent(quoteText)}`;
 
   window.location.href = smsLink;
+}
+
+function copyQuote() {
+  const text = document.getElementById("quoteOutput").value;
+  navigator.clipboard.writeText(text);
+  alert("Quote copied");
+}
+
+</script>
+}
 } 
 </script>
 </body>
