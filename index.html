@@ -48,21 +48,25 @@
       <input id="customerAddress" type="text" placeholder="Enter property address">
     </div>
 
-    <div class="card">
-     <h2>1. Property ZIP Code</h2>
-     <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter property ZIP code to detect pricing zone</div>
-      <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter city or ZIP to detect pricing zone</div>
-      <div style="margin-top:12px;" id="manualWrap" hidden>
-        <select id="manualZone">
-          <option value="">Select pricing zone manually</option>
-          <option value="1">Zone 1 — Budget</option>
-          <option value="2">Zone 2 — Standard</option>
-          <option value="3">Zone 3 — Premium</option>
-          <option value="4">Zone 4 — Coastal</option>
-        </select>
-      </div>
-    </div>
+   <div class="card">
+  <h2>1. Property ZIP Code</h2>
 
+  <input id="area" placeholder="Enter property ZIP code"> 
+
+  <div style="margin-top:12px;" class="greenbox" id="zoneBox">
+    Enter property ZIP code to detect pricing zone
+  </div>
+
+  <div style="margin-top:12px;" id="manualWrap" hidden>
+    <select id="manualZone">
+      <option value="">Select pricing zone manually</option>
+      <option value="1">Zone 1 — Budget</option>
+      <option value="2">Zone 2 — Standard</option>
+      <option value="3">Zone 3 — Premium</option>
+      <option value="4">Zone 4 — Coastal</option>
+    </select>
+  </div>
+</div>
     <div class="card" id="plansCard" style="display:none;">
       <h2>2. Select Plan</h2>
       <div class="plan-btn" data-plan="plan1"></div>
