@@ -409,6 +409,19 @@ function updateQuote() {
   const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
   const extraZones = Number(document.getElementById("extraZones").value || 0);
 
+const irrigationBundle = document.getElementById("irrigationBundle").checked;
+
+let irrigationBundlePrice = 0;
+
+if (irrigationBundle) {
+  if (selectedPlan === "plan1") irrigationBundlePrice = 109;
+  if (selectedPlan === "plan2") irrigationBundlePrice = 99;
+  if (selectedPlan === "plan3") irrigationBundlePrice = 79;
+
+  irrigationBundlePrice += currentZone ? currentZone.adjustment : 0;
+}
+
+
   if (detectorType === "hardwired") detectorPrice = 40;
   if (detectorType === "combo") detectorPrice = 70;
   if (detectorType === "battery") detectorPrice = 70;
@@ -432,7 +445,7 @@ function updateQuote() {
   const atticServiceTotal = attic ? 35 : 0;
 
   const materialSubtotal = filterMaterialTotal + detectorMaterialTotal;
-  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal;
+ const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal + irrigationBundlePrice;
   const materialsTax = materialSubtotal * taxRate;
   const addOn = materialSubtotal + serviceSubtotal + materialsTax;
   const total = basePrice + addOn;
@@ -490,6 +503,7 @@ document.getElementById("detectorLaborQty").addEventListener("input", updateQuot
 document.getElementById("extraZones").addEventListener("input", updateQuote);
 document.getElementById("pmPhotos").addEventListener("change", updateQuote);
 document.getElementById("homeSqft").addEventListener("input", updateQuote);
+ document.getElementById("irrigationBundle").addEventListener("change", updateQuote); 
 
 atticBtn.addEventListener("click", function() {
   attic = !attic;
