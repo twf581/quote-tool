@@ -362,7 +362,9 @@ function copyQuote() {
     status.textContent = "Copy not supported. Copy manually from the quote box.";
   }
 }
-
+<button onclick="emailQuote()" style="margin-top:10px; padding:12px; background:#2563eb; color:white; border:none; border-radius:12px;">
+  Email Quote to Myself
+</button>
 area.addEventListener("input", updateQuote);
 document.getElementById("filters").addEventListener("input", updateQuote);
 document.getElementById("filterType").addEventListener("change", updateQuote);
@@ -390,7 +392,28 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
     updateQuote();
   });
 });
+function emailQuote() {
+  const quoteText = document.getElementById("quoteOutput").value || "";
+  const customerName = document.getElementById("customerName")?.value || "Customer";
+  const customerAddress = document.getElementById("customerAddress")?.value || "";
+  const total = document.getElementById("totalPrice")?.textContent || "";
 
+  if (!quoteText) {
+    alert("Generate the quote first.");
+    return;
+  }
+
+  const subject = `Quote - ${customerName} - ${total}`;
+  const body = `${quoteText}
+
+Customer Address: ${customerAddress}
+Generated from Mobile Onsite Handyman Quote Tool`;
+
+  const mailtoLink =
+    `mailto:mobileonsitehandyman@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailtoLink;
+}
 updateQuote();
 </script>
 </body>
