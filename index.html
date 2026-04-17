@@ -125,9 +125,108 @@
         <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
       </div>
     </div>
+<div class="card" id="repairsCard">
+ <h2>4. Repair Services</h2>
+  <p class="note">Repair pricing follows your current pricing sheet. Drywall includes labor and material, but paint is extra unless noted otherwise.</p>
 
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Drywall Repairs</strong>
+
+    <label for="drywallSize">Drywall repair size</label>
+    <select id="drywallSize">
+      <option value="">Select drywall repair</option>
+      <option value="small">Small drywall repair (up to 12")</option>
+      <option value="medium">Medium drywall repair (13"–36")</option>
+      <option value="large">Large drywall repair (37"–4'x8')</option>
+      <option value="ceiling">Ceiling drywall (quote only)</option>
+    </select>
+
+    <label for="drywallTexture">Texture match</label>
+    <select id="drywallTexture">
+      <option value="">No texture add-on</option>
+      <option value="yes">Add texture match</option>
+    </select>
+
+    <label for="drywallPaintSpot">Paint (spot)</label>
+    <select id="drywallPaintSpot">
+      <option value="">No spot paint</option>
+      <option value="yes">Add spot paint</option>
+    </select>
+
+    <label for="drywallPaintWall">Full wall paint</label>
+    <select id="drywallPaintWall">
+      <option value="">No full wall paint</option>
+      <option value="yes">Add full wall paint</option>
+    </select>
+
+    <label for="drywallEmergency">Emergency / same-day</label>
+    <select id="drywallEmergency">
+      <option value="">No emergency add-on</option>
+      <option value="yes">Add emergency / same-day</option>
+    </select>
+  </div>
+
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Doors / Windows</strong>
+
+    <label>
+      <input id="interiorDoorInstall" type="checkbox" class="inline-checkbox">
+      Interior door install
+    </label>
+
+    <label>
+      <input id="exteriorDoorRepair" type="checkbox" class="inline-checkbox">
+      Exterior door adjust / repair
+    </label>
+
+    <label>
+      <input id="windowScreenRepair" type="checkbox" class="inline-checkbox">
+      Window screen repair
+    </label>
+
+    <label>
+      <input id="paintDoorInstall" type="checkbox" class="inline-checkbox">
+      Paint door after install ($150 including white paint)
+    </label>
+
+    <label>
+      <input id="prehungDoorInstall" type="checkbox" class="inline-checkbox">
+      Install prehung door ($375 including paint)
+    </label>
+
+    <label for="doorTrimKit">Door trim kit</label>
+    <select id="doorTrimKit">
+      <option value="">No door trim kit</option>
+      <option value="yes">Add door trim kit</option>
+    </select>
+  </div>
+
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Plumbing Repairs</strong>
+
+    <label>
+      <input id="faucetInstall" type="checkbox" class="inline-checkbox">
+      Faucet install
+    </label>
+
+    <label>
+      <input id="toiletReplace" type="checkbox" class="inline-checkbox">
+      Toilet replace
+    </label>
+
+    <label>
+      <input id="garbageDisposal" type="checkbox" class="inline-checkbox">
+      Garbage disposal install
+    </label>
+  </div>
+
+  <div class="small" style="margin-top:12px;">
+    Drywall pricing includes labor and material except paint.<br>
+    All other repair pricing is labor only unless otherwise noted.
+  </div>
+</div>
     <div class="card" id="summaryCard" style="display:none;">
-      <h2>4. Quote Summary</h2>
+     <h2>5. Quote Summary</h2>
       <div class="summary-grid">
         <div class="graybox"><div class="muted">Base plan</div><div class="big" id="basePrice">$0</div></div>
         <div class="graybox"><div class="muted">Materials (filters + detectors)</div><div class="big" id="materialsSubtotal">$0</div></div>
