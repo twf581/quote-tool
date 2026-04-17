@@ -472,7 +472,7 @@ if (document.getElementById("irrigationBundle")?.checked) {
   if (selectedPlan === "plan3") bundleText = "\n• Irrigation Bundle Added ($79)";
 }
 
-  const text = "Hi " + customerName + ",\n\nThis is Tim with Mobile Onsite Handyman Services.\n\nHere is your service quote:\n\n" + planLabel + bundleText + "\n\n" Property: " + customerAddress + "\nPhone: " + customerPhone + "\n\nTotal: " + total + "\n\nThis includes all selected services, add-ons, and tax.\n\nLet me know if you'd like to schedule — I have availability this week.\n\nThanks,\nTim\nMobile Onsite Handyman\n951-388-4744";
+  const text = "Hi " + customerName + ",\n\nThis is Tim with Mobile Onsite Handyman Services.\n\nHere is your service quote:\n\n"+ planLabel + bundleText + "\n\n"Property: " + customerAddress + "\nPhone: " + customerPhone + "\n\nTotal: " + total + "\n\nThis includes all selected services, add-ons, and tax.\n\nLet me know if you'd like to schedule — I have availability this week.\n\nThanks,\nTim\nMobile Onsite Handyman\n951-388-4744";
   document.getElementById("quoteOutput").value = text;
 }
 
