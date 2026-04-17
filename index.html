@@ -126,7 +126,7 @@
       </div>
     </div>
 <div class="card" id="repairsCard">
- <h2>4. Repair Services</h2>
+  <h2>4. Repair Services</h2>
   <p class="note">Repair pricing follows your current pricing sheet. Drywall includes labor and material, but paint is extra unless noted otherwise.</p>
 
   <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
@@ -147,22 +147,27 @@
       <option value="yes">Add texture match</option>
     </select>
 
-    <label for="drywallPaintSpot">Paint (spot)</label>
+    <label for="drywallPaintSpot">Paint, repair area (paint not included)</label>
     <select id="drywallPaintSpot">
-      <option value="">No spot paint</option>
-      <option value="yes">Add spot paint</option>
+      <option value="">No repair-area paint</option>
+      <option value="yes">Add repair-area paint</option>
     </select>
 
-    <label for="drywallPaintWall">Full wall paint</label>
+    <label for="drywallPaintWall">Full wall / room paint (paint not included)</label>
     <select id="drywallPaintWall">
-      <option value="">No full wall paint</option>
-      <option value="yes">Add full wall paint</option>
+      <option value="">No full wall / room paint</option>
+      <option value="yes">Add full wall / room paint</option>
     </select>
 
-    <label for="drywallEmergency">Emergency / same-day</label>
+    <label>
+      <input id="paintMatchExtra" type="checkbox" class="inline-checkbox">
+      Paint match extra (plus cost if paint)
+    </label>
+
+    <label for="drywallEmergency">Emergency / same day (if available)</label>
     <select id="drywallEmergency">
-      <option value="">No emergency add-on</option>
-      <option value="yes">Add emergency / same-day</option>
+      <option value="">No emergency / same day</option>
+      <option value="yes">Add emergency / same day</option>
     </select>
   </div>
 
@@ -186,19 +191,18 @@
 
     <label>
       <input id="paintDoorInstall" type="checkbox" class="inline-checkbox">
-      Paint door after install ($150 including white paint)
+      Paint door after install
     </label>
 
     <label>
       <input id="prehungDoorInstall" type="checkbox" class="inline-checkbox">
-      Install prehung door ($375 including paint)
+      Install prehung door
     </label>
 
-    <label for="doorTrimKit">Door trim kit</label>
-    <select id="doorTrimKit">
-      <option value="">No door trim kit</option>
-      <option value="yes">Add door trim kit</option>
-    </select>
+    <label>
+      <input id="doorTrimKitExtra" type="checkbox" class="inline-checkbox">
+      Door trim kit extra
+    </label>
   </div>
 
   <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
@@ -210,13 +214,100 @@
     </label>
 
     <label>
+      <input id="faucetDisposalRemovalExtra" type="checkbox" class="inline-checkbox">
+      Faucet install - extra if disposal has to be removed
+    </label>
+
+    <label>
       <input id="toiletReplace" type="checkbox" class="inline-checkbox">
-      Toilet replace
+      Toilet replacement
+    </label>
+
+    <label>
+      <input id="toiletRepair" type="checkbox" class="inline-checkbox">
+      Toilet repair
+    </label>
+
+    <label>
+      <input id="angleStopReplacement" type="checkbox" class="inline-checkbox">
+      Angle stop replacement
+    </label>
+
+    <label>
+      <input id="supplyLineReplacement" type="checkbox" class="inline-checkbox">
+      Supply line replacement
     </label>
 
     <label>
       <input id="garbageDisposal" type="checkbox" class="inline-checkbox">
-      Garbage disposal install
+      Garbage disposal install (1 1/3 hp disposal included for $109 plus tax)
+    </label>
+  </div>
+
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Electrical</strong>
+
+    <label>
+      <input id="outletSwitchReplace" type="checkbox" class="inline-checkbox">
+      Outlet / switch replace
+    </label>
+
+    <label>
+      <input id="lightFixtureInstall" type="checkbox" class="inline-checkbox">
+      Light fixture install
+    </label>
+
+    <label>
+      <input id="ceilingFanInstall" type="checkbox" class="inline-checkbox">
+      Ceiling fan install
+    </label>
+  </div>
+
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Carpentry / Repairs</strong>
+
+    <label>
+      <input id="baseboardInstall" type="checkbox" class="inline-checkbox">
+      Baseboard install
+    </label>
+
+    <label>
+      <input id="cabinetRepair" type="checkbox" class="inline-checkbox">
+      Cabinet repair
+    </label>
+
+    <label>
+      <input id="tvMounting" type="checkbox" class="inline-checkbox">
+      TV mounting
+    </label>
+
+    <label>
+      <input id="tvWallCableExtra" type="checkbox" class="inline-checkbox">
+      Cables / electrical inside wall extra
+    </label>
+  </div>
+
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+    <strong>Exterior</strong>
+
+    <label>
+      <input id="fenceRepair" type="checkbox" class="inline-checkbox">
+      Fencing / post repair / replacement
+    </label>
+
+    <label>
+      <input id="pressureWashing" type="checkbox" class="inline-checkbox">
+      Pressure washing
+    </label>
+
+    <label>
+      <input id="gutterCleaning" type="checkbox" class="inline-checkbox">
+      Gutter cleaning
+    </label>
+
+    <label>
+      <input id="junkRemoval" type="checkbox" class="inline-checkbox">
+      Junk removal (small load)
     </label>
   </div>
 
