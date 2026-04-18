@@ -127,118 +127,107 @@
     </div>
 <div class="card" id="repairsCard">
   <h2>4. Repair Services</h2>
-  <p class="note">All repair pricing follows your current pricing sheet. Drywall includes labor and material except paint. All other services are labor only unless noted.</p>
+  <p class="note">All repair pricing follows your current pricing sheet. Drywall includes labor and material except paint. All other services are labor only unless otherwise noted.</p>
 
-  <!-- INTERIOR PAINTING -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Interior Painting</strong>
 
-    <label><input type="checkbox" id="interiorPainting"> Interior painting</label>
-    <label><input type="checkbox" id="roomPainting"> Room painting</label>
-    <label><input type="checkbox" id="wallPainting"> Wall painting</label>
-    <label><input type="checkbox" id="ceilingPainting"> Ceiling painting</label>
-    <label><input type="checkbox" id="trimPainting"> Trim / baseboard painting</label>
-    <label><input type="checkbox" id="doorPainting"> Door painting</label>
-    <label><input type="checkbox" id="touchUpPainting"> Touch-up painting</label>
+    <label><input id="interiorPainting" type="checkbox" class="inline-checkbox"> Interior painting</label>
+    <label><input id="roomPainting" type="checkbox" class="inline-checkbox"> Room painting</label>
+    <label><input id="wallPainting" type="checkbox" class="inline-checkbox"> Wall painting</label>
+    <label><input id="ceilingPainting" type="checkbox" class="inline-checkbox"> Ceiling painting</label>
+    <label><input id="trimBaseboardPainting" type="checkbox" class="inline-checkbox"> Trim / baseboard painting</label>
+    <label><input id="doorPainting" type="checkbox" class="inline-checkbox"> Door painting</label>
+    <label><input id="touchUpPainting" type="checkbox" class="inline-checkbox"> Touch-up painting</label>
   </div>
 
-  <!-- DRYWALL -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Drywall Repairs</strong>
 
-    <label>Drywall size</label>
+    <label for="drywallSize">Drywall repair size</label>
     <select id="drywallSize">
-      <option value="">Select</option>
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
-      <option value="ceiling">Ceiling (quote only)</option>
+      <option value="">Select drywall repair</option>
+      <option value="small">Small drywall repair</option>
+      <option value="medium">Medium drywall repair</option>
+      <option value="large">Large drywall repair</option>
+      <option value="ceiling">Ceiling drywall (quote only)</option>
     </select>
 
-    <label><input type="checkbox" id="textureMatch"> Texture match</label>
-    <label><input type="checkbox" id="paintRepair"> Paint repair area (paint not included)</label>
-    <label><input type="checkbox" id="fullPaint"> Full wall / room paint (paint not included)</label>
-    <label><input type="checkbox" id="paintMatch"> Paint match extra</label>
-    <label><input type="checkbox" id="emergencyService"> Emergency / same day (if available)</label>
+    <label><input id="textureMatch" type="checkbox" class="inline-checkbox"> Texture match</label>
+    <label><input id="paintRepairArea" type="checkbox" class="inline-checkbox"> Paint, repair area (paint not included)</label>
+    <label><input id="fullWallRoomPaint" type="checkbox" class="inline-checkbox"> Full wall / room paint (paint not included)</label>
+    <label><input id="paintMatchExtra" type="checkbox" class="inline-checkbox"> Paint match extra</label>
+    <label><input id="emergencySameDay" type="checkbox" class="inline-checkbox"> Emergency / same day (if available)</label>
   </div>
 
-  <!-- PLUMBING -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Plumbing Repairs</strong>
 
-    <label><input type="checkbox" id="faucetInstall"> Faucet install</label>
-    <label><input type="checkbox" id="faucetExtra"> Disposal removal required (extra)</label>
-
-    <label><input type="checkbox" id="toiletReplace"> Toilet replacement</label>
-    <label><input type="checkbox" id="toiletRepair"> Toilet repair</label>
-    <label><input type="checkbox" id="angleStop"> Angle stop replacement</label>
-    <label><input type="checkbox" id="supplyLine"> Supply line replacement</label>
-
-    <label><input type="checkbox" id="vanityInstall"> Vanity install</label>
-    <label><input type="checkbox" id="kitchenSink"> Kitchen sink install</label>
-    <label><input type="checkbox" id="bathSink"> Bathroom sink install</label>
-
-    <label><input type="checkbox" id="disposal"> Garbage disposal install (1 1/3 hp included)</label>
-
-    <label><input type="checkbox" id="tubCaulk"> Bathtub caulking</label>
-    <label><input type="checkbox" id="showerCaulk"> Shower caulking</label>
+    <label><input id="faucetInstall" type="checkbox" class="inline-checkbox"> Faucet install</label>
+    <label><input id="faucetDisposalExtra" type="checkbox" class="inline-checkbox"> Faucet install (extra if disposal removal)</label>
+    <label><input id="toiletReplacement" type="checkbox" class="inline-checkbox"> Toilet replacement</label>
+    <label><input id="toiletRepair" type="checkbox" class="inline-checkbox"> Toilet repair</label>
+    <label><input id="angleStopReplacement" type="checkbox" class="inline-checkbox"> Angle stop replacement</label>
+    <label><input id="supplyLineReplacement" type="checkbox" class="inline-checkbox"> Supply line replacement</label>
+    <label><input id="vanityInstall" type="checkbox" class="inline-checkbox"> Vanity install</label>
+    <label><input id="kitchenSinkInstall" type="checkbox" class="inline-checkbox"> Kitchen sink install</label>
+    <label><input id="bathroomSinkInstall" type="checkbox" class="inline-checkbox"> Bathroom sink install</label>
+    <label><input id="garbageDisposalInstall" type="checkbox" class="inline-checkbox"> Garbage disposal install</label>
+    <label><input id="bathtubCaulking" type="checkbox" class="inline-checkbox"> Bathtub caulking</label>
+    <label><input id="showerCaulking" type="checkbox" class="inline-checkbox"> Shower caulking</label>
   </div>
 
-  <!-- DOORS / WINDOWS -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Doors / Windows</strong>
 
-    <label><input type="checkbox" id="interiorDoor"> Interior door install</label>
-    <label><input type="checkbox" id="exteriorDoor"> Exterior door repair</label>
-    <label><input type="checkbox" id="screenRepair"> Window screen repair</label>
-
-    <label><input type="checkbox" id="paintDoorInstall"> Paint door after install ($150)</label>
-    <label><input type="checkbox" id="prehungDoor"> Prehung door install ($375)</label>
-    <label><input type="checkbox" id="doorTrim"> Door trim kit (extra)</label>
-
-    <label><input type="checkbox" id="windowCaulk"> Window caulking</label>
+    <label><input id="interiorDoorInstall" type="checkbox" class="inline-checkbox"> Interior door install</label>
+    <label><input id="exteriorDoorRepair" type="checkbox" class="inline-checkbox"> Exterior door adjust / repair</label>
+    <label><input id="windowScreenRepair" type="checkbox" class="inline-checkbox"> Window screen repair</label>
+    <label><input id="paintDoorAfterInstall" type="checkbox" class="inline-checkbox"> Paint door after install</label>
+    <label><input id="prehungDoorInstall" type="checkbox" class="inline-checkbox"> Prehung door install</label>
+    <label><input id="doorTrimKitExtra" type="checkbox" class="inline-checkbox"> Door trim kit extra</label>
+    <label><input id="windowCaulking" type="checkbox" class="inline-checkbox"> Window caulking</label>
   </div>
 
-  <!-- ELECTRICAL -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Electrical</strong>
 
-    <label><input type="checkbox" id="outletReplace"> Outlet / switch replace</label>
-    <label><input type="checkbox" id="lightInstall"> Light fixture install</label>
-    <label><input type="checkbox" id="fanInstall"> Ceiling fan install</label>
+    <label><input id="outletSwitchReplace" type="checkbox" class="inline-checkbox"> Outlet / switch replace</label>
+    <label><input id="lightFixtureInstall" type="checkbox" class="inline-checkbox"> Light fixture install</label>
+    <label><input id="ceilingFanInstall" type="checkbox" class="inline-checkbox"> Ceiling fan install</label>
   </div>
 
-  <!-- CARPENTRY -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Carpentry / Repairs</strong>
 
-    <label><input type="checkbox" id="baseboard"> Baseboard install</label>
-    <label><input type="checkbox" id="cabinet"> Cabinet repair</label>
-
-    <label><input type="checkbox" id="tvMount"> TV mounting</label>
-    <label><input type="checkbox" id="tvWire"> In-wall wiring (extra)</label>
+    <label><input id="baseboardInstall" type="checkbox" class="inline-checkbox"> Baseboard install</label>
+    <label><input id="cabinetRepair" type="checkbox" class="inline-checkbox"> Cabinet repair</label>
+    <label><input id="tvMounting" type="checkbox" class="inline-checkbox"> TV mounting</label>
+    <label><input id="inWallCableExtra" type="checkbox" class="inline-checkbox"> In-wall cable / electrical extra</label>
   </div>
 
-  <!-- FLOORING -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Flooring</strong>
 
-    <label><input type="checkbox" id="floorInstall"> Flooring install</label>
-    <label><input type="checkbox" id="floorRepair"> Flooring repair</label>
-
-    <label><input type="checkbox" id="vinylFloor"> Vinyl plank flooring</label>
-    <label><input type="checkbox" id="laminateFloor"> Laminate flooring</label>
-    <label><input type="checkbox" id="transitionStrip"> Transition strip / base shoe</label>
+    <label><input id="flooringInstall" type="checkbox" class="inline-checkbox"> Flooring install</label>
+    <label><input id="flooringRepair" type="checkbox" class="inline-checkbox"> Flooring repair</label>
+    <label><input id="vinylPlankFlooring" type="checkbox" class="inline-checkbox"> Vinyl plank flooring</label>
+    <label><input id="laminateFlooring" type="checkbox" class="inline-checkbox"> Laminate flooring</label>
+    <label><input id="transitionStripInstall" type="checkbox" class="inline-checkbox"> Transition strip / base shoe install</label>
   </div>
 
-  <!-- EXTERIOR -->
-  <div class="box">
+  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
     <strong>Exterior</strong>
 
-    <label><input type="checkbox" id="fenceRepair"> Fence / post repair or replacement</label>
-    <label><input type="checkbox" id="pressureWash"> Pressure washing</label>
-    <label><input type="checkbox" id="gutter"> Gutter cleaning</label>
-    <label><input type="checkbox" id="junk"> Junk removal</label>
+    <label><input id="fencePostRepair" type="checkbox" class="inline-checkbox"> Fencing / post repair / replacement</label>
+    <label><input id="pressureWashing" type="checkbox" class="inline-checkbox"> Pressure washing</label>
+    <label><input id="gutterCleaning" type="checkbox" class="inline-checkbox"> Gutter cleaning</label>
+    <label><input id="junkRemoval" type="checkbox" class="inline-checkbox"> Junk removal</label>
+  </div>
+
+  <div class="small" style="margin-top:12px;">
+    Drywall pricing includes labor and material except paint.<br>
+    All other repair pricing is labor only unless otherwise noted.
   </div>
 </div>
     <div class="card" id="summaryCard" style="display:none;">
