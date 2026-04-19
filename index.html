@@ -1,10 +1,9 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobile Onsite Handyman Services LLC - Quote Tool (Test Version)</title>
+  <title>Mobile Onsite Handyman Services LLC - Quote Tool</title>
   <style>
     body { font-family: Arial, sans-serif; background:#f8fafc; margin:0; padding:16px; color:#0f172a; }
     .wrap { max-width:900px; margin:0 auto; }
@@ -18,6 +17,7 @@
     .big { font-size:30px; font-weight:bold; }
     .greenbox { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:14px; padding:14px; }
     .graybox { background:#f1f5f9; border-radius:14px; padding:14px; }
+    .row { display:grid; gap:12px; }
     .note { font-size:14px; color:#475569; }
     .details { display:none; text-align:left; margin-top:10px; font-size:14px; line-height:1.55; }
     .detail-btn { margin-top:10px; background:#e2e8f0; }
@@ -30,36 +30,43 @@
 <body>
   <div class="wrap">
     <div class="hero">
-      <div style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;">Mobile Quote Tool - Test Version</div>
+      <div style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;">Mobile Quote Tool</div>
       <h1 style="margin:8px 0 4px 0;">Mobile Onsite Handyman Services LLC</h1>
       <p style="margin:0;opacity:.9;">Property maintenance plans priced by service area</p>
     </div>
 
     <div class="card">
       <h2>Customer Information</h2>
+
       <label for="customerName">Customer Name</label>
       <input id="customerName" type="text" placeholder="Enter customer name">
+
       <label for="customerPhone">Phone Number</label>
       <input id="customerPhone" type="text" placeholder="Enter phone number">
+
       <label for="customerAddress">Property Address</label>
       <input id="customerAddress" type="text" placeholder="Enter property address">
     </div>
 
-    <div class="card">
-      <h2>1. Property ZIP Code</h2>
-      <input id="area" placeholder="Enter property ZIP code">
-      <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter property ZIP code to detect pricing zone</div>
-      <div style="margin-top:12px;" id="manualWrap" hidden>
-        <select id="manualZone">
-          <option value="">Select pricing zone manually</option>
-          <option value="1">Zone 1 — Local</option>
-          <option value="2">Zone 2 — Standard</option>
-          <option value="3">Zone 3 — Extended</option>
-          <option value="4">Zone 4 — Premium</option>
-        </select>
-      </div>
-    </div>
+   <div class="card">
+  <h2>1. Property ZIP Code</h2>
 
+  <input id="area" placeholder="Enter property ZIP code"> 
+
+  <div style="margin-top:12px;" class="greenbox" id="zoneBox">
+    Enter property ZIP code to detect pricing zone
+  </div>
+
+  <div style="margin-top:12px;" id="manualWrap" hidden>
+    <select id="manualZone">
+      <option value="">Select pricing zone manually</option>
+      <option value="1">Zone 1 — Budget</option>
+      <option value="2">Zone 2 — Standard</option>
+      <option value="3">Zone 3 — Premium</option>
+      <option value="4">Zone 4 — Coastal</option>
+    </select>
+  </div>
+</div>
     <div class="card" id="plansCard" style="display:none;">
       <h2>2. Select Plan</h2>
       <div class="plan-btn" data-plan="plan1"></div>
@@ -88,6 +95,7 @@
 
       <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
         <strong>Smoke / CO Detector Services</strong>
+
         <label for="detectorType">Detector type</label>
         <select id="detectorType">
           <option value="none">No detector add-on</option>
@@ -95,166 +103,85 @@
           <option value="combo">Smoke/CO Detector ($70 + tax)</option>
           <option value="battery">Battery Detector ($70 + tax)</option>
         </select>
+
         <label for="detectorQty">Number of detectors</label>
         <input id="detectorQty" type="number" min="0" value="" placeholder="Enter quantity">
+
         <label for="extraDetectorQty">Extra detector service ($20 each additional unit)</label>
         <input id="extraDetectorQty" type="number" min="0" value="" placeholder="Enter quantity">
+
         <label for="batteryServiceQty">Extra detector battery service ($22 each)</label>
         <input id="batteryServiceQty" type="number" min="0" value="" placeholder="Enter quantity">
+
         <label for="detectorLaborQty">Detector replacement labor ($45 each)</label>
         <input id="detectorLaborQty" type="number" min="0" value="" placeholder="Enter quantity">
       </div>
 
       <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
         <strong>Irrigation Add-Ons</strong>
+
         <label for="extraZones">Extra irrigation zones ($38 per zone)</label>
         <input id="extraZones" type="number" min="0" value="" placeholder="Enter quantity">
       </div>
-<div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-  <strong>Irrigation Bundle</strong>
 
-  <label>
-    <input id="irrigationBundle" type="checkbox" style="width:auto; margin-right:8px;">
-    Add irrigation maintenance bundle (discounted)
-  </label>
-</div>
       <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
         <strong>Property Manager Photos</strong>
-        <label><input id="pmPhotos" type="checkbox" class="inline-checkbox">Include interior condition photos</label>
+
+        <label>
+          <input id="pmPhotos" type="checkbox" class="inline-checkbox">
+          Include interior condition photos
+        </label>
+
         <label for="homeSqft">Home size (sq ft)</label>
         <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
       </div>
     </div>
-<div class="card" id="repairsCard">
-  <h2>4. Repair Services</h2>
-  <p class="note">All repair pricing follows your current pricing sheet. Drywall includes labor and material except paint. All other services are labor only unless otherwise noted.</p>
 
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Interior Painting</strong>
-
-    <label><input id="interiorPainting" type="checkbox" class="inline-checkbox"> Interior painting</label>
-    <label><input id="roomPainting" type="checkbox" class="inline-checkbox"> Room painting</label>
-    <label><input id="wallPainting" type="checkbox" class="inline-checkbox"> Wall painting</label>
-    <label><input id="ceilingPainting" type="checkbox" class="inline-checkbox"> Ceiling painting</label>
-    <label><input id="trimBaseboardPainting" type="checkbox" class="inline-checkbox"> Trim / baseboard painting</label>
-    <label><input id="doorPainting" type="checkbox" class="inline-checkbox"> Door painting</label>
-    <label><input id="touchUpPainting" type="checkbox" class="inline-checkbox"> Touch-up painting</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Drywall Repairs</strong>
-
-    <label for="drywallSize">Drywall repair size</label>
-    <select id="drywallSize">
-      <option value="">Select drywall repair</option>
-      <option value="small">Small drywall repair</option>
-      <option value="medium">Medium drywall repair</option>
-      <option value="large">Large drywall repair</option>
-      <option value="ceiling">Ceiling drywall (quote only)</option>
-    </select>
-
-    <label><input id="textureMatch" type="checkbox" class="inline-checkbox"> Texture match</label>
-    <label><input id="paintRepairArea" type="checkbox" class="inline-checkbox"> Paint, repair area (paint not included)</label>
-    <label><input id="fullWallRoomPaint" type="checkbox" class="inline-checkbox"> Full wall / room paint (paint not included)</label>
-    <label><input id="paintMatchExtra" type="checkbox" class="inline-checkbox"> Paint match extra</label>
-    <label><input id="emergencySameDay" type="checkbox" class="inline-checkbox"> Emergency / same day (if available)</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Plumbing Repairs</strong>
-
-    <label><input id="faucetInstall" type="checkbox" class="inline-checkbox"> Faucet install</label>
-    <label><input id="faucetDisposalExtra" type="checkbox" class="inline-checkbox"> Faucet install (extra if disposal removal)</label>
-    <label><input id="toiletReplacement" type="checkbox" class="inline-checkbox"> Toilet replacement</label>
-    <label><input id="toiletRepair" type="checkbox" class="inline-checkbox"> Toilet repair</label>
-    <label><input id="angleStopReplacement" type="checkbox" class="inline-checkbox"> Angle stop replacement</label>
-    <label><input id="supplyLineReplacement" type="checkbox" class="inline-checkbox"> Supply line replacement</label>
-    <label><input id="vanityInstall" type="checkbox" class="inline-checkbox"> Vanity install</label>
-    <label><input id="kitchenSinkInstall" type="checkbox" class="inline-checkbox"> Kitchen sink install</label>
-    <label><input id="bathroomSinkInstall" type="checkbox" class="inline-checkbox"> Bathroom sink install</label>
-    <label><input id="garbageDisposalInstall" type="checkbox" class="inline-checkbox"> Garbage disposal install</label>
-    <label><input id="bathtubCaulking" type="checkbox" class="inline-checkbox"> Bathtub caulking</label>
-    <label><input id="showerCaulking" type="checkbox" class="inline-checkbox"> Shower caulking</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Doors / Windows</strong>
-
-    <label><input id="interiorDoorInstall" type="checkbox" class="inline-checkbox"> Interior door install</label>
-    <label><input id="exteriorDoorRepair" type="checkbox" class="inline-checkbox"> Exterior door adjust / repair</label>
-    <label><input id="windowScreenRepair" type="checkbox" class="inline-checkbox"> Window screen repair</label>
-    <label><input id="paintDoorAfterInstall" type="checkbox" class="inline-checkbox"> Paint door after install</label>
-    <label><input id="prehungDoorInstall" type="checkbox" class="inline-checkbox"> Prehung door install</label>
-    <label><input id="doorTrimKitExtra" type="checkbox" class="inline-checkbox"> Door trim kit extra</label>
-    <label><input id="windowCaulking" type="checkbox" class="inline-checkbox"> Window caulking</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Electrical</strong>
-
-    <label><input id="outletSwitchReplace" type="checkbox" class="inline-checkbox"> Outlet / switch replace</label>
-    <label><input id="lightFixtureInstall" type="checkbox" class="inline-checkbox"> Light fixture install</label>
-    <label><input id="ceilingFanInstall" type="checkbox" class="inline-checkbox"> Ceiling fan install</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Carpentry / Repairs</strong>
-
-    <label><input id="baseboardInstall" type="checkbox" class="inline-checkbox"> Baseboard install</label>
-    <label><input id="cabinetRepair" type="checkbox" class="inline-checkbox"> Cabinet repair</label>
-    <label><input id="tvMounting" type="checkbox" class="inline-checkbox"> TV mounting</label>
-    <label><input id="inWallCableExtra" type="checkbox" class="inline-checkbox"> In-wall cable / electrical extra</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Flooring</strong>
-
-    <label><input id="flooringInstall" type="checkbox" class="inline-checkbox"> Flooring install</label>
-    <label><input id="flooringRepair" type="checkbox" class="inline-checkbox"> Flooring repair</label>
-    <label><input id="vinylPlankFlooring" type="checkbox" class="inline-checkbox"> Vinyl plank flooring</label>
-    <label><input id="laminateFlooring" type="checkbox" class="inline-checkbox"> Laminate flooring</label>
-    <label><input id="transitionStripInstall" type="checkbox" class="inline-checkbox"> Transition strip / base shoe install</label>
-  </div>
-
-  <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
-    <strong>Exterior</strong>
-
-    <label><input id="fencePostRepair" type="checkbox" class="inline-checkbox"> Fencing / post repair / replacement</label>
-    <label><input id="pressureWashing" type="checkbox" class="inline-checkbox"> Pressure washing</label>
-    <label><input id="gutterCleaning" type="checkbox" class="inline-checkbox"> Gutter cleaning</label>
-    <label><input id="junkRemoval" type="checkbox" class="inline-checkbox"> Junk removal</label>
-  </div>
-
-  <div class="small" style="margin-top:12px;">
-    Drywall pricing includes labor and material except paint.<br>
-    All other repair pricing is labor only unless otherwise noted.
-  </div>
-</div>
     <div class="card" id="summaryCard" style="display:none;">
-     <h2>5. Quote Summary</h2>
+      <h2>4. Quote Summary</h2>
       <div class="summary-grid">
-        <div class="graybox"><div class="muted">Base plan</div><div class="big" id="basePrice">$0</div></div>
-        <div class="graybox"><div class="muted">Materials (filters + detectors)</div><div class="big" id="materialsSubtotal">$0</div></div>
-        <div class="graybox"><div class="muted">Service & labor</div><div class="big" id="serviceSubtotal">$0</div></div>
-        <div class="graybox"><div class="muted">Materials tax (8.75%)</div><div class="big" id="materialsTax">$0</div></div>
-        <div class="graybox"><div class="muted">Add-ons total</div><div class="big" id="addOnPrice">$0</div></div>
-        <div class="greenbox"><div class="muted" style="color:#047857;">Estimated total</div><div class="big" id="totalPrice">$0</div></div>
+        <div class="graybox">
+          <div class="muted">Base plan</div>
+          <div class="big" id="basePrice">$0</div>
+        </div>
+        <div class="graybox">
+          <div class="muted">Materials (filters + detectors)</div>
+          <div class="big" id="materialsSubtotal">$0</div>
+        </div>
+        <div class="graybox">
+          <div class="muted">Service & labor</div>
+          <div class="big" id="serviceSubtotal">$0</div>
+        </div>
+        <div class="graybox">
+          <div class="muted">Materials tax (8.75%)</div>
+          <div class="big" id="materialsTax">$0</div>
+        </div>
+        <div class="graybox">
+          <div class="muted">Add-ons total</div>
+          <div class="big" id="addOnPrice">$0</div>
+        </div>
+        <div class="greenbox">
+          <div class="muted" style="color:#047857;">Estimated total</div>
+          <div class="big" id="totalPrice">$0</div>
+        </div>
       </div>
-     <div class="small" style="margin-top:12px;">
-  Tax applies to materials only.<br><br>
+      <div class="small" style="margin-top:12px;">
+        Tax applies to materials only.
+      </div>
 
-  <strong>General Service Notes:</strong><br>
-  All services are non-invasive visual and functional maintenance.<br>
-  Limited to accessible areas and safe working conditions.<br>
-  Additional detectors, filters, or materials beyond included limits may incur added cost.<br>
-  Service pricing may vary based on location, property size, and access conditions.
-</div>
+      <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">
+        Generate Quote Text
+      </button>
 
-      <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">Generate Quote Text</button>
-      <textarea id="quoteOutput" style="height:140px;"></textarea>
-      <button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">Open Text Message</button>
-      <button onclick="copyQuote()" style="margin-top:10px; padding:12px; background:#64748b; color:white; border:none; border-radius:12px;">Copy Quote</button>
-      <div id="copyStatus" style="margin-top:8px; font-size:14px; color:#059669; font-weight:600;"></div>
+   <textarea id="quoteOutput" style="height:140px;"></textarea>
+
+<button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">
+  Open Text Message
+</button>
+
+<button onclick="copyQuote()" style="margin-top:10px; padding:12px; background:#64748b; color:white; border:none; border-radius:12px;">
+  Copy Quote
+</button> 
     </div>
   </div>
 
@@ -262,22 +189,58 @@
 const basePlans = { plan1:185, plan2:275, plan3:395, irrigation:179 };
 const taxRate = 0.0875;
 
-const zoneExactZips = {
-  1: ["92543","92544","92545","92551","92552","92553","92554","92555","92556","92557","92570","92571"],
-  2: ["92313","92324","92335","92336","92337","92346","92373","92376","92401","92403","92404","92405","92407","92408","92501","92503","92504","92505","92506","92507","92508","92509","92584","92585","92586","92595","92879","92880","92881","92882","92883"],
-  3: ["91709","91730","91737","91739","91761","91762","91764","91784","91786","92028","92220","92223","92234","92260","92262","92264","92270","92307","92308","92344","92345","92392","92394","92395","92562","92563","92564","92590","92591","92592","92593","92860"],
-  4: ["92008","92009","92014","92024","92025","92026","92027","92037","92054","92056","92057","92064","92069","92078","92083","92084","92101","92102","92103","92104","92105","92109","92110","92111","92117","92120","92122","92123","92127","92602","92603","92604","92606","92612","92614","92618","92620","92626","92627","92629","92630","92637","92646","92647","92648","92649","92651","92652","92653","92657","92660","92661","92662","92663","92672","92673","92691","92692"]
-};
+const zones = {
+  1:{
+    name:"Zone 1",
+    label:"Budget",
+    adjustment:0,
+    cities:["moreno valley","perris","hemet","san bernardino"],
+    zipPrefixes:[
+      "92557","92553","92543","92544","92545","924",
+      "92551","92555","92570","92571","92220","92223",
+      "92324","92552","92554","92556"
+    ]
+  },
 
-const zonePrefixRanges = {
-  4: ["900","901","902","903","904","905","906","907","908","910","911","912","913","914","915","916","917","918"]
-};
+  2:{
+    name:"Zone 2",
+    label:"Standard",
+    adjustment:20,
+    cities:["riverside","menifee","fontana","rialto","ontario","corona"],
+    zipPrefixes:[
+      "92501","92584","92335","92336","92337","92376","91761",
+      "92879","92880","92881",
+      "92503","92504","92505","92506","92507","92508","92509",
+      "92586","92595","92585","92373","92313","92883"
+    ]
+  },
 
-const zonesMeta = {
-  1:{ name:"Zone 1", label:"Local", adjustment:0 },
-  2:{ name:"Zone 2", label:"Standard", adjustment:20 },
-  3:{ name:"Zone 3", label:"Extended", adjustment:45 },
-  4:{ name:"Zone 4", label:"Premium", adjustment:95 }
+  3:{
+    name:"Zone 3",
+    label:"Premium",
+    adjustment:45,
+    cities:["temecula","murrieta","rancho cucamonga","chino hills","fallbrook"],
+    zipPrefixes:[
+      "92590","92591","92592","92562","92563",
+      "91730","91737","91739","91709","92028",
+      "91784","92860","92564","92593"
+    ]
+  },
+
+  4:{
+    name:"Zone 4",
+    label:"Coastal",
+    adjustment:95,
+    cities:["newport beach","laguna beach","dana point","san clemente","irvine","carlsbad","encinitas","del mar","la jolla"],
+    zipPrefixes:[
+      "92660","92661","92662","92663","92651","92629",
+      "92672","92673","92602","92603",
+      "92008","92024","92014","92037",
+      "92657","92604","92606","92612","92614",
+      "92618","92620","92691","92692",
+      "92009","92067"
+    ]
+  }
 };
 
 const planTitles = {
@@ -295,8 +258,7 @@ const planDisplayNames = {
 };
 
 const planDetails = {
-
-plan1: `
+  plan1: `
 Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
 
 1. Smoke & Carbon Monoxide Detector Service<br>
@@ -327,10 +289,30 @@ Service Frequency: Once per year (recommended with optional upgrades to bi-annua
 • Provide interior condition photos for homes up to 2,000 sq ft.<br>
 • Document general condition at time of service.<br>
 • Capture visible issues or concerns for records and reporting.<br>
-• Photos and findings delivered via email for professional documentation and easy record keeping.
-`,
+• Photos and findings delivered via email for professional documentation and easy record keeping.<br><br>
 
-plan2: `
+Benefits to Client<br>
+• Improves occupant safety (fire and CO prevention).<br>
+• Supports consistent property documentation.<br>
+• Extends life of HVAC systems.<br>
+• Reduces risk of water damage.<br>
+• Ensures proper operation of lighting and ceiling fans.<br>
+• Identifies small issues before they become major repairs.<br>
+• Provides peace of mind with professional oversight.<br><br>
+
+Service Notes<br>
+• This is a non-invasive visual and functional inspection service.<br>
+• Repairs or replacements beyond listed scope will be quoted separately.<br>
+• Specialty materials (non-standard filters, specialty batteries, detectors, and similar items) will be billed separately.<br><br>
+
+Optional Add-Ons (Upsell Opportunities)<br>
+• Bi-annual service (recommended for rentals or high-use properties).<br>
+• Full home inspection-style report with detailed findings.<br>
+• Minor repairs bundle (pre-approved labor allowance).<br>
+• Water heater flush.<br>
+• Dryer vent cleaning.<br>
+`,
+  plan2: `
 Includes all services in Plan 1, plus the following additional services:<br><br>
 
 1. Water Heater Inspection & Flush<br>
@@ -353,10 +335,26 @@ Includes all services in Plan 1, plus the following additional services:<br><br>
 4. Door Hardware Maintenance<br>
 • Lubricate door locks, latches, and hinges.<br>
 • Tighten loose hardware including handles, strike plates, and hinges.<br>
-• Ensure smooth operation and proper door closure (replacement quoted if needed).
-`,
+• Ensure smooth operation and proper door closure (replacement quoted if needed).<br><br>
 
-plan3: `
+Property Manager Option: +$30<br>
+• Interior condition photos for homes up to 2,000 sq ft.<br>
+• Photos and findings delivered via email for professional documentation and easy record keeping.<br><br>
+
+Additional Benefits<br>
+• Improves appliance efficiency and lifespan (water heater and dryer system).<br>
+• Reduces fire risk from clogged dryer vents.<br>
+• Enhances overall property functionality and tenant satisfaction.<br>
+• Addresses common wear-and-tear issues proactively.<br>
+• Reduces maintenance calls for minor issues.<br><br>
+
+Service Notes<br>
+• This is a non-invasive visual and functional maintenance service.<br>
+• Services are limited to accessible components only.<br>
+• Repairs or replacements beyond listed scope will be quoted separately.<br>
+• Additional charges may apply for roof access or multi-story service conditions.<br>
+`,
+  plan3: `
 Includes all services in Plan 1 and Plan 2, plus the following additional services:<br><br>
 
 1. Visual Roof Inspection<br>
@@ -375,12 +373,27 @@ Includes all services in Plan 1 and Plan 2, plus the following additional servic
 
 3. Reporting & Documentation<br>
 • All findings documented with photos.<br>
-• Clear identification of maintenance items, monitor items, and recommended repairs.
+• Clear identification of maintenance items, monitor items, and recommended repairs.<br><br>
+
+• Property Manager Option: +$30 for interior condition photos up to 2,000 sq ft, delivered via email.<br><br>
+
+Additional Benefits<br>
+• Provides a full interior and exterior condition overview.<br>
+• Helps detect costly roof and exterior issues early.<br>
+• Ideal for property managers and absentee owners.<br>
+• Supports liability protection and asset tracking through documentation.<br>
+• Offers the highest level of preventative maintenance and oversight.<br><br>
+
+Service Notes<br>
+• This is a non-invasive visual and functional maintenance service.<br>
+• Services are limited to accessible areas and safe working conditions.<br>
+• Repairs or replacements beyond listed scope will be quoted separately.<br>
+• Additional charges may apply for roof access or multi-story service conditions.<br>
 `,
+  irrigation: `
+This service is designed to ensure proper operation and efficiency of a 4-zone irrigation system through routine testing, adjustment, and controller optimization. It helps identify issues early, improve water distribution, and reduce waste.<br><br>
 
-irrigation: `
-This service is designed to ensure proper operation and efficiency of a 4-zone irrigation system through routine testing, adjustment, and controller optimization.<br><br>
-
+Included Services<br>
 1. Irrigation System Zone Testing (Up to 4 Zones)<br>
 • Test all irrigation zones for proper operation.<br>
 • Verify coverage, pressure, and function of each zone.<br>
@@ -395,37 +408,65 @@ This service is designed to ensure proper operation and efficiency of a 4-zone i
 • Inspect and adjust controller settings.<br>
 • Set or update watering schedule based on season and property needs.<br>
 • Verify proper zone timing and operation.<br>
-• Ensure system is programmed for efficient water usage.
-`
+• Ensure system is programmed for efficient water usage.<br><br>
 
+Service Notes<br>
+• This is a non-invasive visual and functional maintenance service.<br>
+• Service is limited to testing, adjustments, and controller programming only.<br>
+• Sprinkler head replacement and valve replacement are not included.<br>
+• Any repairs, replacements, or system upgrades will be quoted separately.<br>
+• Additional zones beyond 4 may require an additional charge.<br><br>
+
+Benefits to Client<br>
+• Improves irrigation efficiency and water distribution.<br>
+• Helps reduce water waste and utility costs.<br>
+• Ensures proper seasonal watering schedules.<br>
+• Identifies system issues before they worsen.<br>
+• Maintains landscape health and appearance.<br><br>
+
+Recommended Bundle Pricing<br>
+• Add to Plan 1: +$99<br>
+• Add to Plan 2: +$79<br>
+• Add to Plan 3: +$49 or included<br><br>
+
+General Service Notes<br>
+• All services are non-invasive visual and functional maintenance.<br>
+• Limited to accessible areas and safe working conditions.<br>
+• Additional detectors, filters, or materials beyond included limits may incur added cost.<br>
+• Service pricing may vary based on location, property size, and access conditions.<br>
+`
 };
 
-function zipToZone(zip) {
-  const digits = (zip || "").replace(/\D/g, "");
+const cityLookup = new Map();
+const zipLookup = [];
+
+Object.entries(zones).forEach(([zoneNumber, zone]) => {
+  zone.cities.forEach(city => cityLookup.set(city, { zoneNumber, ...zone }));
+  zone.zipPrefixes.forEach(prefix => zipLookup.push({ prefix, value:{ zoneNumber, ...zone } }));
+});
+
+function findZone(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return null;
+  if (cityLookup.has(q)) return cityLookup.get(q);
+  const digits = q.replace(/\D/g, "");
   if (!digits) return null;
-
-  for (const zoneNum of ["1","2","3","4"]) {
-    const exacts = zoneExactZips[zoneNum] || [];
-    if (exacts.includes(digits)) {
-      return { zoneNumber: zoneNum, ...zonesMeta[zoneNum] };
-    }
-  }
-
-  for (const zoneNum of ["1","2","3","4"]) {
-    const prefixes = zonePrefixRanges[zoneNum] || [];
-    if (prefixes.some(prefix => digits.startsWith(prefix))) {
-      return { zoneNumber: zoneNum, ...zonesMeta[zoneNum] };
-    }
-  }
-  return null;
+  const hit = zipLookup.find(z => digits.startsWith(z.prefix));
+  return hit ? hit.value : null;
 }
 
 function formatCurrency(v) {
-  return new Intl.NumberFormat("en-US", { style:"currency", currency:"USD", maximumFractionDigits:2 }).format(v || 0);
+  return new Intl.NumberFormat("en-US", {
+    style:"currency",
+    currency:"USD",
+    maximumFractionDigits:2
+  }).format(v);
 }
 
 function getBasePlanPrice(plan, adj) {
-  return plan === "irrigation" ? basePlans.irrigation + Math.round(adj * 0.75) : basePlans[plan] + adj;
+  return plan === "irrigation"
+    ? basePlans.irrigation + Math.round(adj * 0.75)
+    : basePlans[plan] + adj;
 }
 
 function getFilterPrice(type) {
@@ -445,6 +486,8 @@ const zoneBox = document.getElementById("zoneBox");
 const plansCard = document.getElementById("plansCard");
 const filtersCard = document.getElementById("filtersCard");
 const summaryCard = document.getElementById("summaryCard");
+const filters = document.getElementById("filters");
+const filterType = document.getElementById("filterType");
 const atticBtn = document.getElementById("atticBtn");
 const manualWrap = document.getElementById("manualWrap");
 const manualZone = document.getElementById("manualZone");
@@ -459,19 +502,23 @@ function renderPlans() {
   document.querySelectorAll(".plan-btn").forEach(btn => {
     const key = btn.dataset.plan;
     btn.classList.toggle("active", selectedPlan === key);
-    btn.innerHTML = "<strong>" + planTitles[key] + "</strong><br><span>" +
+
+    btn.innerHTML =
+      "<strong>" + planTitles[key] + "</strong><br><span>" +
       formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
-      "</span><br><br><button type='button' class='detail-btn' onclick=\"event.stopPropagation(); toggleDetails('" + key + "');\">View Details</button><div id='details-" + key + "' class='details'>" + planDetails[key] + "</div>";
+      "</span>" +
+      "<br><br><button type='button' class='detail-btn' onclick=\"event.stopPropagation(); toggleDetails('" + key + "');\">View Details</button>" +
+      "<div id='details-" + key + "' class='details'>" + planDetails[key] + "</div>";
   });
 }
 
 function getManualZone() {
   if (!manualZone.value) return null;
-  return { zoneNumber: manualZone.value, ...zonesMeta[manualZone.value] };
+  return { zoneNumber: manualZone.value, ...zones[manualZone.value] };
 }
 
 function updateQuote() {
-  const detected = zipToZone(area.value);
+  const detected = findZone(area.value);
   currentZone = detected || getManualZone();
 
   if (detected) {
@@ -480,7 +527,9 @@ function updateQuote() {
     zoneBox.textContent = "Matched pricing area: " + detected.name + " (" + detected.label + ")";
   } else {
     manualWrap.hidden = false;
-    zoneBox.textContent = currentZone ? "Manual zone selected: " + currentZone.name + " (" + currentZone.label + ")" : "Enter property ZIP code to detect pricing zone, or select pricing zone manually";
+    zoneBox.textContent = currentZone
+      ? "Manual zone selected: " + currentZone.name + " (" + currentZone.label + ")"
+      : "Enter city or ZIP to detect pricing zone, or select pricing zone manually";
   }
 
   if (!currentZone) {
@@ -497,6 +546,7 @@ function updateQuote() {
   renderPlans();
 
   const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
+
   const filterCountNum = Number(document.getElementById("filters").value || 0);
   const selectedFilterType = document.getElementById("filterType").value;
 
@@ -513,19 +563,6 @@ function updateQuote() {
   const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
   const extraZones = Number(document.getElementById("extraZones").value || 0);
 
-const irrigationBundle = document.getElementById("irrigationBundle").checked;
-
-let irrigationBundlePrice = 0;
-
-if (irrigationBundle) {
-  if (selectedPlan === "plan1") irrigationBundlePrice = 109;
-  if (selectedPlan === "plan2") irrigationBundlePrice = 99;
-  if (selectedPlan === "plan3") irrigationBundlePrice = 79;
-
-  irrigationBundlePrice += currentZone ? currentZone.adjustment : 0;
-}
-
-
   if (detectorType === "hardwired") detectorPrice = 40;
   if (detectorType === "combo") detectorPrice = 70;
   if (detectorType === "battery") detectorPrice = 70;
@@ -538,10 +575,15 @@ if (irrigationBundle) {
 
   let pmPhotoTotal = 0;
   if (pmPhotos) {
-    if (homeSqft <= 2000) pmPhotoTotal = 30;
-    else if (homeSqft <= 3000) pmPhotoTotal = 45;
-    else if (homeSqft <= 4000) pmPhotoTotal = 60;
-    else pmPhotoTotal = 60;
+    if (homeSqft <= 2000) {
+      pmPhotoTotal = 30;
+    } else if (homeSqft <= 3000) {
+      pmPhotoTotal = 45;
+    } else if (homeSqft <= 4000) {
+      pmPhotoTotal = 60;
+    } else {
+      pmPhotoTotal = 60;
+    }
     pmPhotoTotal += currentZone ? currentZone.adjustment : 0;
   }
 
@@ -549,7 +591,7 @@ if (irrigationBundle) {
   const atticServiceTotal = attic ? 35 : 0;
 
   const materialSubtotal = filterMaterialTotal + detectorMaterialTotal;
- const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal + irrigationBundlePrice;
+  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal;
   const materialsTax = materialSubtotal * taxRate;
   const addOn = materialSubtotal + serviceSubtotal + materialsTax;
   const total = basePrice + addOn;
@@ -563,48 +605,46 @@ if (irrigationBundle) {
 }
 
 function generateQuote() {
-  const customerName = document.getElementById("customerName").value || "Customer";
-  const customerPhone = document.getElementById("customerPhone").value || "";
-  const customerAddress = document.getElementById("customerAddress").value || "";
+  const customerName = document.getElementById("customerName")?.value || "Customer";
+  const customerPhone = document.getElementById("customerPhone")?.value || "";
+  const customerAddress = document.getElementById("customerAddress")?.value || "";
   const total = document.getElementById("totalPrice").textContent;
+  const base = document.getElementById("basePrice").textContent;
+  const materials = document.getElementById("materialsSubtotal").textContent;
+  const service = document.getElementById("serviceSubtotal").textContent;
+  const tax = document.getElementById("materialsTax").textContent;
   const planLabel = planDisplayNames[selectedPlan] || selectedPlan;
-  let bundleText = "";
 
-if (document.getElementById("irrigationBundle")?.checked) {
-  if (selectedPlan === "plan1") bundleText = "\n• Irrigation Bundle Added ($109)";
-  if (selectedPlan === "plan2") bundleText = "\n• Irrigation Bundle Added ($99)";
-  if (selectedPlan === "plan3") bundleText = "\n• Irrigation Bundle Added ($79)";
-}
+  const text =
+`Mobile Onsite Handyman Services LLC
 
-  const text = "Hi " + customerName + ",\n\nThis is Tim with Mobile Onsite Handyman Services.\n\nHere is your service quote:\n\n" + planLabel + bundleText + "\n\nProperty: " + customerAddress + "\nPhone: " + customerPhone + "\n\nTotal: " + total + "\n\nThis includes all selected services, add-ons, and tax.\n\nLet me know if you'd like to schedule — I have availability this week.\n\nThanks,\nTim\nMobile Onsite Handyman\n951-388-4744";
+Quote For: ${customerName}
+Phone: ${customerPhone}
+Property Address: ${customerAddress}
+
+Selected Service:
+${planLabel}
+
+Pricing Breakdown:
+Base Plan: ${base}
+Materials: ${materials}
+Service & Labor: ${service}
+Materials Tax (8.75%): ${tax}
+
+Estimated Total: ${total}
+
+This quote is based on the selected plan, add-ons, property size, and service area.
+
+Call or text for same week service:
+951-388-4744
+mobileonsitehandyman@gmail.com`;
+
   document.getElementById("quoteOutput").value = text;
 }
 
-function sendTextMessage() {
-  const phone = document.getElementById("customerPhone").value || "";
-  const quoteText = document.getElementById("quoteOutput").value || "";
-  if (!quoteText) { alert("Generate the quote first."); return; }
-  if (!phone) { alert("Enter customer phone number."); return; }
-  const cleanedPhone = phone.replace(/\D/g, "");
-  const smsLink = "sms:" + cleanedPhone + "?body=" + encodeURIComponent(quoteText);
-  window.location.href = smsLink;
-}
-
-function copyQuote() {
-  const text = document.getElementById("quoteOutput").value;
-  const status = document.getElementById("copyStatus");
-  if (!text) { status.textContent = "Generate the quote first."; return; }
-  try {
-    navigator.clipboard.writeText(text);
-    status.textContent = "✓ Quote copied";
-  } catch (err) {
-    status.textContent = "Copy not supported. Copy manually from the quote box.";
-  }
-}
-
 area.addEventListener("input", updateQuote);
-document.getElementById("filters").addEventListener("input", updateQuote);
-document.getElementById("filterType").addEventListener("change", updateQuote);
+filters.addEventListener("input", updateQuote);
+filterType.addEventListener("change", updateQuote);
 manualZone.addEventListener("change", updateQuote);
 document.getElementById("detectorType").addEventListener("change", updateQuote);
 document.getElementById("detectorQty").addEventListener("input", updateQuote);
@@ -614,7 +654,6 @@ document.getElementById("detectorLaborQty").addEventListener("input", updateQuot
 document.getElementById("extraZones").addEventListener("input", updateQuote);
 document.getElementById("pmPhotos").addEventListener("change", updateQuote);
 document.getElementById("homeSqft").addEventListener("input", updateQuote);
- document.getElementById("irrigationBundle").addEventListener("change", updateQuote); 
 
 atticBtn.addEventListener("click", function() {
   attic = !attic;
@@ -632,6 +671,36 @@ document.querySelectorAll(".plan-btn").forEach(btn => {
 });
 
 updateQuote();
+
+function sendTextMessage() {
+  const phone = document.getElementById("customerPhone")?.value || "";
+  const quoteText = document.getElementById("quoteOutput")?.value || "";
+
+  if (!quoteText) {
+    alert("Generate the quote first.");
+    return;
+  }
+
+  if (!phone) {
+    alert("Enter customer phone number.");
+    return;
+  }
+
+  const cleanedPhone = phone.replace(/\D/g, "");
+  const smsLink = `sms:${cleanedPhone}?body=${encodeURIComponent(quoteText)}`;
+
+  window.location.href = smsLink;
+}
+
+function copyQuote() {
+  const text = document.getElementById("quoteOutput").value;
+  navigator.clipboard.writeText(text);
+  alert("Quote copied");
+}
+
+</script>
+}
+} 
 </script>
 </body>
 </html>
