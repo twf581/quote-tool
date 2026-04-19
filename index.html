@@ -134,8 +134,22 @@
 
         <label for="homeSqft">Home size (sq ft)</label>
         <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
-      </div>
-    </div>
+        
+     <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+  <strong>Bi-Annual Maintenance</strong>
+
+  <label>
+    <input id="biAnnualPlan" type="checkbox" class="inline-checkbox">
+    Add Bi-Annual Maintenance Plan (2 visits/year – $300 base)
+  </label>
+
+  <div class="small" style="margin-top:8px;">
+    First visit includes full maintenance service.<br>
+    Second visit is limited to HVAC filter replacement only (same filter service as included in Plan 1).<br>
+    Each scheduled visit includes one standard HVAC filter replacement. Additional filters beyond the included one per visit will be charged accordingly.<br>
+    Additional services during the second visit will be quoted as needed.
+  </div>
+</div>
 
     <div class="card" id="summaryCard" style="display:none;">
       <h2>4. Quote Summary</h2>
@@ -550,7 +564,24 @@ function updateQuote() {
 
   renderPlans();
 
-  const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
+const biAnnualPlan = document.getElementById("biAnnualPlan")?.checked;
+
+let basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
+
+if (biAnnualPlan && selectedPlan === "plan1") {
+  basePrice = 300 + (currentZone ? currentZone.adjustment : 0);
+}
+
+const biAnnualPlanEl = document.getElementById("biAnnualPlan");
+const biAnnualPlan = biAnnualPlanEl ? biAnnualPlanEl.checked : false;
+
+if (biAnnualPlan && selectedPlan === "plan1") {
+  basePrice = 300 + (currentZone ? currentZone.adjustment : 0);
+}
+
+if (biAnnualPlan && selectedPlan !== "plan1" && biAnnualPlanEl) {
+  biAnnualPlanEl.checked = false;
+}
 
   const filterCountNum = Number(document.getElementById("filters").value || 0);
   const selectedFilterType = document.getElementById("filterType").value;
@@ -607,6 +638,7 @@ function updateQuote() {
   document.getElementById("materialsTax").textContent = formatCurrency(materialsTax);
   document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
   document.getElementById("totalPrice").textContent = formatCurrency(total);
+  document.getElementById("biAnnualPlan").addEventListener("change", updateQuote);
 }
 
 function generateQuote() {
@@ -619,6 +651,11 @@ function generateQuote() {
   const service = document.getElementById("serviceSubtotal").textContent;
   const tax = document.getElementById("materialsTax").textContent;
   const planLabel = planDisplayNames[selectedPlan] || selectedPlan;
+ let biAnnualText = "";
+
+if (document.getElementById("biAnnualPlan")?.checked && selectedPlan === "plan1") {
+  biAnnualText = "\nBi-Annual Maintenance Plan added ($300 base)";
+} 
 
   const text =
 `Mobile Onsite Handyman Services LLC
