@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobile Onsite Handyman Services LLC - Quote Tool</title>
+  <title>Mobile Onsite Handyman Services LLC - Maintenance App (Bi-Annual Test)</title>
   <style>
     body { font-family: Arial, sans-serif; background:#f8fafc; margin:0; padding:16px; color:#0f172a; }
     .wrap { max-width:900px; margin:0 auto; }
@@ -17,59 +17,52 @@
     .big { font-size:30px; font-weight:bold; }
     .greenbox { background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; border-radius:14px; padding:14px; }
     .graybox { background:#f1f5f9; border-radius:14px; padding:14px; }
-    .row { display:grid; gap:12px; }
     .note { font-size:14px; color:#475569; }
     .details { display:none; text-align:left; margin-top:10px; font-size:14px; line-height:1.55; }
     .detail-btn { margin-top:10px; background:#e2e8f0; }
     .summary-grid { display:grid; gap:12px; }
     .small { font-size:14px; color:#475569; }
-    .inline-checkbox { width:auto; margin-right:8px; }
+    .inline-checkbox { width:auto; margin-right:8px; margin-bottom:0; vertical-align:middle; }
     label { display:block; font-weight:600; margin-top:8px; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <div style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;">Mobile Quote Tool</div>
+      <div style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;">Maintenance App - Bi-Annual Test</div>
       <h1 style="margin:8px 0 4px 0;">Mobile Onsite Handyman Services LLC</h1>
       <p style="margin:0;opacity:.9;">Property maintenance plans priced by service area</p>
     </div>
 
     <div class="card">
       <h2>Customer Information</h2>
-
       <label for="customerName">Customer Name</label>
       <input id="customerName" type="text" placeholder="Enter customer name">
-
       <label for="customerPhone">Phone Number</label>
       <input id="customerPhone" type="text" placeholder="Enter phone number">
-
       <label for="customerAddress">Property Address</label>
       <input id="customerAddress" type="text" placeholder="Enter property address">
     </div>
 
-   <div class="card">
-  <h2>1. Property ZIP Code</h2>
+    <div class="card">
+      <h2>1. Property ZIP Code</h2>
+      <input id="area" placeholder="Enter property ZIP code">
+      <div style="margin-top:12px;" class="greenbox" id="zoneBox">Enter property ZIP code to detect pricing zone</div>
+      <div style="margin-top:12px;" id="manualWrap" hidden>
+        <select id="manualZone">
+          <option value="">Select pricing zone manually</option>
+          <option value="1">Zone 1 — Budget</option>
+          <option value="2">Zone 2 — Standard</option>
+          <option value="3">Zone 3 — Premium</option>
+          <option value="4">Zone 4 — Coastal</option>
+        </select>
+      </div>
+    </div>
 
-  <input id="area" placeholder="Enter property ZIP code"> 
-
-  <div style="margin-top:12px;" class="greenbox" id="zoneBox">
-    Enter property ZIP code to detect pricing zone
-  </div>
-
-  <div style="margin-top:12px;" id="manualWrap" hidden>
-    <select id="manualZone">
-      <option value="">Select pricing zone manually</option>
-      <option value="1">Zone 1 — Budget</option>
-      <option value="2">Zone 2 — Standard</option>
-      <option value="3">Zone 3 — Premium</option>
-      <option value="4">Zone 4 — Coastal</option>
-    </select>
-  </div>
-</div>
     <div class="card" id="plansCard" style="display:none;">
       <h2>2. Select Plan</h2>
       <div class="plan-btn" data-plan="plan1"></div>
+      <div class="plan-btn" data-plan="plan1biannual"></div>
       <div class="plan-btn" data-plan="plan2"></div>
       <div class="plan-btn" data-plan="plan3"></div>
       <div class="plan-btn" data-plan="irrigation"></div>
@@ -77,9 +70,9 @@
 
     <div class="card" id="filtersCard" style="display:none;">
       <h2>3. Add-Ons & Materials</h2>
-      <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is already included in applicable plans, so only enter extra filters here.</p>
+      <p class="note">Add filters, detectors, irrigation zones, and related services below. One standard 1-inch filter is already included in applicable visits, so only enter extra filters here.</p>
 
-      <label for="filters">Extra filters needed (1 standard filter is already included)</label>
+      <label for="filters">Extra filters needed (1 standard filter is already included per scheduled visit)</label>
       <input id="filters" type="number" min="0" value="" placeholder="Enter extra quantity">
 
       <label for="filterType">Filter type</label>
@@ -125,13 +118,13 @@
       </div>
 
       <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
+        <strong>Irrigation Bundle</strong>
+        <label><input id="irrigationBundle" type="checkbox" class="inline-checkbox"> Add irrigation maintenance bundle</label>
+      </div>
+
+      <div style="margin-top:15px; padding:12px; border:1px solid #e2e8f0; border-radius:12px;">
         <strong>Property Manager Photos</strong>
-
-        <label>
-          <input id="pmPhotos" type="checkbox" class="inline-checkbox">
-          Include interior condition photos
-        </label>
-
+        <label><input id="pmPhotos" type="checkbox" class="inline-checkbox"> Include interior condition photos</label>
         <label for="homeSqft">Home size (sq ft)</label>
         <input id="homeSqft" type="number" min="0" value="" placeholder="Enter square footage">
       </div>
@@ -140,426 +133,97 @@
     <div class="card" id="summaryCard" style="display:none;">
       <h2>4. Quote Summary</h2>
       <div class="summary-grid">
-        <div class="graybox">
-          <div class="muted">Base plan</div>
-          <div class="big" id="basePrice">$0</div>
-        </div>
-        <div class="graybox">
-          <div class="muted">Materials (filters + detectors)</div>
-          <div class="big" id="materialsSubtotal">$0</div>
-        </div>
-        <div class="graybox">
-          <div class="muted">Service & labor</div>
-          <div class="big" id="serviceSubtotal">$0</div>
-        </div>
-        <div class="graybox">
-          <div class="muted">Materials tax (8.75%)</div>
-          <div class="big" id="materialsTax">$0</div>
-        </div>
-        <div class="graybox">
-          <div class="muted">Add-ons total</div>
-          <div class="big" id="addOnPrice">$0</div>
-        </div>
-        <div class="greenbox">
-          <div class="muted" style="color:#047857;">Estimated total</div>
-          <div class="big" id="totalPrice">$0</div>
-        </div>
+        <div class="graybox"><div class="muted">Base plan</div><div class="big" id="basePrice">$0</div></div>
+        <div class="graybox"><div class="muted">Materials (filters + detectors)</div><div class="big" id="materialsSubtotal">$0</div></div>
+        <div class="graybox"><div class="muted">Service & labor</div><div class="big" id="serviceSubtotal">$0</div></div>
+        <div class="graybox"><div class="muted">Materials tax (8.75%)</div><div class="big" id="materialsTax">$0</div></div>
+        <div class="graybox"><div class="muted">Add-ons total</div><div class="big" id="addOnPrice">$0</div></div>
+        <div class="greenbox"><div class="muted" style="color:#047857;">Estimated total</div><div class="big" id="totalPrice">$0</div></div>
       </div>
       <div class="small" style="margin-top:12px;">
-        Tax applies to materials only.
+        Tax applies to materials only.<br><br>
+        <strong>General Service Notes:</strong><br>
+        All services are non-invasive visual and functional maintenance.<br>
+        Limited to accessible areas and safe working conditions.<br>
+        Additional detectors, filters, or materials beyond included limits may incur added cost.<br>
+        Service pricing may vary based on location, property size, and access conditions.<br><br>
+        <strong>Payment Policy:</strong><br>
+        Accepted payment methods: Zelle, Venmo, and credit cards.<br>
+        A 3.5% processing fee applies to credit card payments.<br>
+        Checks are accepted for approved property management accounts only.
       </div>
 
-      <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">
-        Generate Quote Text
-      </button>
-
-<textarea id="quoteOutput" style="height:140px;"></textarea>
-
-<button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">
-  Open Text Message
-</button>
-
-<button onclick="copyQuote()" style="margin-top:10px; padding:12px; background:#64748b; color:white; border:none; border-radius:12px;">
-  Copy Quote
-</button>
-
-<a href="https://calendly.com/mobileonsitehandyman/handyman-service-appointment" target="_blank" style="display:block; width:100%; box-sizing:border-box; margin-top:10px; padding:14px; background:#2563eb; color:white; border-radius:12px; text-decoration:none; text-align:center;">
-  Book Appointment
-</a>
-
-</div>
-</div>  
+      <button onclick="generateQuote()" style="margin-top:15px; padding:14px; background:#047857; color:white; border:none; border-radius:12px;">Generate Quote Text</button>
+      <textarea id="quoteOutput" style="height:140px;"></textarea>
+      <button onclick="sendTextMessage()" style="margin-top:15px; padding:14px; background:#0f172a; color:white; border:none; border-radius:12px;">Open Text Message</button>
+      <button onclick="copyQuote()" style="margin-top:10px; padding:12px; background:#64748b; color:white; border:none; border-radius:12px;">Copy Quote</button>
+      <a href="https://calendly.com/mobileonsitehandyman/handyman-service-appointment" target="_blank" style="display:block; width:100%; box-sizing:border-box; margin-top:10px; padding:14px; background:#2563eb; color:white; border-radius:12px; text-decoration:none; text-align:center;">Book Appointment</a>
+      <div id="copyStatus" style="margin-top:8px; font-size:14px; color:#059669; font-weight:600;"></div>
+    </div>
+  </div>
 
 <script>
-const basePlans = { plan1:185, plan2:275, plan3:395, irrigation:179 };
+const basePlans = { plan1:185, plan1biannual:300, plan2:275, plan3:395, irrigation:179 };
 const taxRate = 0.0875;
-
-const zones = {
-  1:{
-    name:"Zone 1",
-    label:"Budget",
-    adjustment:0,
-    cities:["moreno valley","perris","hemet","san bernardino"],
-    zipPrefixes:[
-      "92557","92553","92543","92544","92545","924",
-      "92551","92555","92570","92571","92220","92223",
-      "92324","92552","92554","92556"
-    ]
-  },
-
-  2:{
-    name:"Zone 2",
-    label:"Standard",
-    adjustment:20,
-    cities:["riverside","menifee","fontana","rialto","ontario","corona"],
-    zipPrefixes:[
-      "92501","92584","92335","92336","92337","92376","91761",
-      "92879","92880","92881",
-      "92503","92504","92505","92506","92507","92508","92509",
-      "92586","92595","92585","92373","92313","92883"
-    ]
-  },
-
-  3:{
-    name:"Zone 3",
-    label:"Premium",
-    adjustment:45,
-    cities:["temecula","murrieta","rancho cucamonga","chino hills","fallbrook"],
-    zipPrefixes:[
-      "92590","92591","92592","92562","92563",
-      "91730","91737","91739","91709","92028",
-      "91784","92860","92564","92593"
-    ]
-  },
-
-  4:{
-    name:"Zone 4",
-    label:"Coastal",
-    adjustment:95,
-    cities:["newport beach","laguna beach","dana point","san clemente","irvine","carlsbad","encinitas","del mar","la jolla"],
-    zipPrefixes:[
-      "92660","92661","92662","92663","92651","92629",
-      "92672","92673","92602","92603",
-      "92008","92024","92014","92037",
-      "92657","92604","92606","92612","92614",
-      "92618","92620","92691","92692",
-      "92009","92067"
-    ]
-  }
+const zoneExactZips = {
+  1: ["92543","92544","92545","92551","92552","92553","92554","92555","92556","92557","92570","92571"],
+  2: ["92313","92324","92335","92336","92337","92346","92373","92376","92401","92403","92404","92405","92407","92408","92501","92503","92504","92505","92506","92507","92508","92509","92584","92585","92586","92595","92879","92880","92881","92882","92883"],
+  3: ["91709","91730","91737","91739","91761","91762","91764","91784","91786","92028","92220","92223","92234","92260","92262","92264","92270","92307","92308","92344","92345","92392","92394","92395","92562","92563","92564","92590","92591","92592","92593","92860"],
+  4: ["92008","92009","92014","92024","92025","92026","92027","92037","92054","92056","92057","92064","92069","92078","92083","92084","92101","92102","92103","92104","92105","92109","92110","92111","92117","92120","92122","92123","92127","92602","92603","92604","92606","92612","92614","92618","92620","92626","92627","92629","92630","92637","92646","92647","92648","92649","92651","92652","92653","92657","92660","92661","92662","92663","92672","92673","92691","92692"]
 };
-
-const planTitles = {
-  plan1: "Plan 1 – Essential Maintenance Package ($185)",
-  plan2: "Plan 2 – Enhanced Maintenance Package ($275)",
-  plan3: "Plan 3 – Comprehensive Property Care ($395)",
-  irrigation: "Plan 4 – Annual Irrigation Maintenance Package ($179 Standalone)"
-};
-
-const planDisplayNames = {
-  plan1: "Plan 1 – Essential Maintenance Package",
-  plan2: "Plan 2 – Enhanced Maintenance Package",
-  plan3: "Plan 3 – Comprehensive Property Care",
-  irrigation: "Plan 4 – Annual Irrigation Maintenance Package"
-};
-
+const zonePrefixRanges = { 4: ["900","901","902","903","904","905","906","907","908","910","911","912","913","914","915","916","917","918"] };
+const zonesMeta = { 1:{ name:"Zone 1", label:"Budget", adjustment:0 }, 2:{ name:"Zone 2", label:"Standard", adjustment:20 }, 3:{ name:"Zone 3", label:"Premium", adjustment:45 }, 4:{ name:"Zone 4", label:"Coastal", adjustment:95 } };
+const planTitles = { plan1:"Plan 1 – Annual Maintenance Package ($185)", plan1biannual:"Plan 1 – Bi-Annual Maintenance Plan ($300)", plan2:"Plan 2 – Enhanced Maintenance Package ($275)", plan3:"Plan 3 – Comprehensive Property Care ($395)", irrigation:"Plan 4 – Annual Irrigation Maintenance Package ($179 Standalone)" };
+const planDisplayNames = { plan1:"Plan 1 – Annual Maintenance Package", plan1biannual:"Plan 1 – Bi-Annual Maintenance Plan", plan2:"Plan 2 – Enhanced Maintenance Package", plan3:"Plan 3 – Comprehensive Property Care", irrigation:"Plan 4 – Annual Irrigation Maintenance Package" };
 const planDetails = {
-  plan1: `
-Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>
-
-1. Smoke & Carbon Monoxide Detector Service<br>
-• Test all smoke and CO detectors.<br>
-• Replace batteries (standard detector batteries included, up to 6 units).<br>
-• Verify proper operation and placement (visual check).<br>
-• Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>
-
-2. HVAC Air Return Filter Replacement<br>
-• Inspect existing filter condition.<br>
-• Replace one standard 1-inch thick air return filter (included).<br>
-• Ensure proper fit and airflow.<br>
-• Some filter sizes or types may require special ordering and will be quoted separately.<br><br>
-
-3. Plumbing Visual Inspection<br>
-• Inspect faucets for leaks, drips, or corrosion.<br>
-• Check under-sink plumbing and visible drain lines.<br>
-• Identify early signs of water damage or failure.<br>
-• Check toilet for leaks, flushing, and stability.<br><br>
-
-4. Light Fixtures & Ceiling Fan Check<br>
-• Inspect accessible interior light fixtures and ceiling fans.<br>
-• Verify proper operation (switches, speed settings, and function).<br>
-• Check for wobble, noise, or mounting concerns in ceiling fans.<br>
-• Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>
-
-5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>
-• Provide interior condition photos for homes up to 2,000 sq ft.<br>
-• Document general condition at time of service.<br>
-• Capture visible issues or concerns for records and reporting.<br>
-• Photos and findings delivered via email for professional documentation and easy record keeping.<br><br>
-
-Benefits to Client<br>
-• Improves occupant safety (fire and CO prevention).<br>
-• Supports consistent property documentation.<br>
-• Extends life of HVAC systems.<br>
-• Reduces risk of water damage.<br>
-• Ensures proper operation of lighting and ceiling fans.<br>
-• Identifies small issues before they become major repairs.<br>
-• Provides peace of mind with professional oversight.<br><br>
-
-Service Notes<br>
-• This is a non-invasive visual and functional inspection service.<br>
-• Repairs or replacements beyond listed scope will be quoted separately.<br>
-• Specialty materials (non-standard filters, specialty batteries, detectors, and similar items) will be billed separately.<br><br>
-
-Optional Add-Ons (Upsell Opportunities)<br>
-• Bi-annual service (recommended for rentals or high-use properties).<br>
-• Full home inspection-style report with detailed findings.<br>
-• Minor repairs bundle (pre-approved labor allowance).<br>
-• Water heater flush.<br>
-• Dryer vent cleaning.<br>
-`,
-  plan2: `
-Includes all services in Plan 1, plus the following additional services:<br><br>
-
-1. Water Heater Inspection & Flush<br>
-• Inspect water heater for proper operation and visible signs of wear or leaks.<br>
-• Check temperature/pressure relief valve (visual only).<br>
-• Perform tank flush to remove sediment buildup, where applicable.<br>
-• Identify potential issues or recommended maintenance (repairs or replacement quoted separately).<br><br>
-
-2. Dryer Vent Inspection & Cleaning<br>
-• Inspect accessible dryer vent system for lint buildup or airflow restriction.<br>
-• Clean dryer vent as needed to improve efficiency and reduce fire risk.<br>
-• Identify any damaged or improperly installed vent components (repairs or replacement quoted separately).<br>
-• Roof-mounted dryer vents on 2–3 story homes will require an additional charge.<br><br>
-
-3. Closet Door Adjustment<br>
-• Inspect closet doors for alignment and operation.<br>
-• Adjust tracks, rollers, or hinges as needed for proper function.<br>
-• Improve ease of use and help prevent further wear (replacement quoted if needed).<br><br>
-
-4. Door Hardware Maintenance<br>
-• Lubricate door locks, latches, and hinges.<br>
-• Tighten loose hardware including handles, strike plates, and hinges.<br>
-• Ensure smooth operation and proper door closure (replacement quoted if needed).<br><br>
-
-Property Manager Option: +$30<br>
-• Interior condition photos for homes up to 2,000 sq ft.<br>
-• Photos and findings delivered via email for professional documentation and easy record keeping.<br><br>
-
-Additional Benefits<br>
-• Improves appliance efficiency and lifespan (water heater and dryer system).<br>
-• Reduces fire risk from clogged dryer vents.<br>
-• Enhances overall property functionality and tenant satisfaction.<br>
-• Addresses common wear-and-tear issues proactively.<br>
-• Reduces maintenance calls for minor issues.<br><br>
-
-Service Notes<br>
-• This is a non-invasive visual and functional maintenance service.<br>
-• Services are limited to accessible components only.<br>
-• Repairs or replacements beyond listed scope will be quoted separately.<br>
-• Additional charges may apply for roof access or multi-story service conditions.<br>
-`,
-  plan3: `
-Includes all services in Plan 1 and Plan 2, plus the following additional services:<br><br>
-
-1. Visual Roof Inspection<br>
-• Inspect roof from accessible vantage points.<br>
-• Identify visible signs of wear, damage, or aging.<br>
-• Check for missing, damaged, or deteriorated roofing materials.<br>
-• Inspect visible flashing, penetrations, and roof components.<br>
-• Limited to safe and accessible conditions; non-invasive with no destructive testing.<br><br>
-
-2. Exterior Home Inspection<br>
-• Inspect exterior walls, siding, and trim for visible damage or deterioration.<br>
-• Check windows and doors for visible seal or frame issues.<br>
-• Inspect eaves, fascia, and soffits in accessible areas.<br>
-• Observe drainage conditions around the home, including visible grading concerns.<br>
-• Identify maintenance items that may impact overall property condition.<br><br>
-
-3. Reporting & Documentation<br>
-• All findings documented with photos.<br>
-• Clear identification of maintenance items, monitor items, and recommended repairs.<br><br>
-
-• Property Manager Option: +$30 for interior condition photos up to 2,000 sq ft, delivered via email.<br><br>
-
-Additional Benefits<br>
-• Provides a full interior and exterior condition overview.<br>
-• Helps detect costly roof and exterior issues early.<br>
-• Ideal for property managers and absentee owners.<br>
-• Supports liability protection and asset tracking through documentation.<br>
-• Offers the highest level of preventative maintenance and oversight.<br><br>
-
-Service Notes<br>
-• This is a non-invasive visual and functional maintenance service.<br>
-• Services are limited to accessible areas and safe working conditions.<br>
-• Repairs or replacements beyond listed scope will be quoted separately.<br>
-• Additional charges may apply for roof access or multi-story service conditions.<br>
-`,
-  irrigation: `
-This service is designed to ensure proper operation and efficiency of a 4-zone irrigation system through routine testing, adjustment, and controller optimization. It helps identify issues early, improve water distribution, and reduce waste.<br><br>
-
-Included Services<br>
-1. Irrigation System Zone Testing (Up to 4 Zones)<br>
-• Test all irrigation zones for proper operation.<br>
-• Verify coverage, pressure, and function of each zone.<br>
-• Identify non-functioning or irregular zones.<br><br>
-
-2. Sprinkler Head Adjustment<br>
-• Adjust sprinkler heads for proper spray pattern and direction.<br>
-• Improve coverage and reduce overspray or dry spots.<br>
-• Perform minor alignment corrections as needed.<br><br>
-
-3. Irrigation Controller Programming<br>
-• Inspect and adjust controller settings.<br>
-• Set or update watering schedule based on season and property needs.<br>
-• Verify proper zone timing and operation.<br>
-• Ensure system is programmed for efficient water usage.<br><br>
-
-Service Notes<br>
-• This is a non-invasive visual and functional maintenance service.<br>
-• Service is limited to testing, adjustments, and controller programming only.<br>
-• Sprinkler head replacement and valve replacement are not included.<br>
-• Any repairs, replacements, or system upgrades will be quoted separately.<br>
-• Additional zones beyond 4 may require an additional charge.<br><br>
-
-Benefits to Client<br>
-• Improves irrigation efficiency and water distribution.<br>
-• Helps reduce water waste and utility costs.<br>
-• Ensures proper seasonal watering schedules.<br>
-• Identifies system issues before they worsen.<br>
-• Maintains landscape health and appearance.<br><br>
-
-Recommended Bundle Pricing<br>
-• Add to Plan 1: +$99<br>
-• Add to Plan 2: +$79<br>
-• Add to Plan 3: +$49 or included<br><br>
-
-General Service Notes<br>
-• All services are non-invasive visual and functional maintenance.<br>
-• Limited to accessible areas and safe working conditions.<br>
-• Additional detectors, filters, or materials beyond included limits may incur added cost.<br>
-• Service pricing may vary based on location, property size, and access conditions.<br>
-`
+  plan1:`Service Frequency: Once per year (recommended with optional upgrades to bi-annual)<br><br>1. Smoke & Carbon Monoxide Detector Service<br>• Test all smoke and CO detectors.<br>• Replace batteries (standard detector batteries included, up to 6 units).<br>• Verify proper operation and placement (visual check).<br>• Identify units that may require replacement due to age or malfunction (replacement quoted separately).<br><br>2. HVAC Air Return Filter Replacement<br>• Inspect existing filter condition.<br>• Replace one standard 1-inch thick air return filter (included).<br>• Ensure proper fit and airflow.<br>• Some filter sizes or types may require special ordering and will be quoted separately.<br><br>3. Plumbing Visual Inspection<br>• Inspect faucets for leaks, drips, or corrosion.<br>• Check under-sink plumbing and visible drain lines.<br>• Identify early signs of water damage or failure.<br>• Check toilet for leaks, flushing, and stability.<br><br>4. Light Fixtures & Ceiling Fan Check<br>• Inspect accessible interior light fixtures and ceiling fans.<br>• Verify proper operation (switches, speed settings, and function).<br>• Check for wobble, noise, or mounting concerns in ceiling fans.<br>• Identify faulty bulbs, switches, or visible wiring issues (non-invasive).<br><br>5. Interior Condition Photo Documentation (Property Manager Option: +$30)<br>• Provide interior condition photos for homes up to 2,000 sq ft.<br>• Document general condition at time of service.<br>• Capture visible issues or concerns for records and reporting.<br>• Photos and findings delivered via email for professional documentation and easy record keeping.`,
+  plan1biannual:`Bi-Annual Maintenance Plan includes two scheduled visits per year.<br><br>First visit includes full maintenance service as included in Plan 1.<br><br>Second visit is limited to HVAC filter replacement only (same filter service as included in Plan 1).<br><br>Each scheduled visit includes one standard HVAC filter replacement. Additional filters beyond the included one per visit will be charged accordingly.<br><br>Additional services during the second visit will be quoted as needed.`,
+  plan2:`Includes all services in Plan 1, plus the following additional services:<br><br>1. Water Heater Inspection & Flush<br>• Inspect water heater for proper operation and visible signs of wear or leaks.<br>• Check temperature/pressure relief valve (visual only).<br>• Perform tank flush to remove sediment buildup, where applicable.<br>• Identify potential issues or recommended maintenance (repairs or replacement quoted separately).<br><br>2. Dryer Vent Inspection & Cleaning<br>• Inspect accessible dryer vent system for lint buildup or airflow restriction.<br>• Clean dryer vent as needed to improve efficiency and reduce fire risk.<br>• Identify any damaged or improperly installed vent components (repairs or replacement quoted separately).<br>• Roof-mounted dryer vents on 2–3 story homes will require an additional charge.<br><br>3. Closet Door Adjustment<br>• Inspect closet doors for alignment and operation.<br>• Adjust tracks, rollers, or hinges as needed for proper function.<br>• Improve ease of use and help prevent further wear (replacement quoted if needed).<br><br>4. Door Hardware Maintenance<br>• Lubricate door locks, latches, and hinges.<br>• Tighten loose hardware including handles, strike plates, and hinges.<br>• Ensure smooth operation and proper door closure (replacement quoted if needed).`,
+  plan3:`Includes all services in Plan 1 and Plan 2, plus the following additional services:<br><br>1. Visual Roof Inspection<br>• Inspect roof from accessible vantage points.<br>• Identify visible signs of wear, damage, or aging.<br>• Check for missing, damaged, or deteriorated roofing materials.<br>• Inspect visible flashing, penetrations, and roof components.<br>• Limited to safe and accessible conditions; non-invasive with no destructive testing.<br><br>2. Exterior Home Inspection<br>• Inspect exterior walls, siding, and trim for visible damage or deterioration.<br>• Check windows and doors for visible seal or frame issues.<br>• Inspect eaves, fascia, and soffits in accessible areas.<br>• Observe drainage conditions around the home, including visible grading concerns.<br>• Identify maintenance items that may impact overall property condition.<br><br>3. Reporting & Documentation<br>• All findings documented with photos.<br>• Clear identification of maintenance items, monitor items, and recommended repairs.`,
+  irrigation:`This service is designed to ensure proper operation and efficiency of a 4-zone irrigation system through routine testing, adjustment, and controller optimization.<br><br>1. Irrigation System Zone Testing (Up to 4 Zones)<br>• Test all irrigation zones for proper operation.<br>• Verify coverage, pressure, and function of each zone.<br>• Identify non-functioning or irregular zones.<br><br>2. Sprinkler Head Adjustment<br>• Adjust sprinkler heads for proper spray pattern and direction.<br>• Improve coverage and reduce overspray or dry spots.<br>• Perform minor alignment corrections as needed.<br><br>3. Irrigation Controller Programming<br>• Inspect and adjust controller settings.<br>• Set or update watering schedule based on season and property needs.<br>• Verify proper zone timing and operation.<br>• Ensure system is programmed for efficient water usage.<br><br>Recommended Bundle Pricing<br>• Add to Plan 1: +$109<br>• Add to Plan 1 Bi-Annual: +$109<br>• Add to Plan 2: +$99<br>• Add to Plan 3: +$79<br><br>General Service Notes<br>• All services are non-invasive visual and functional maintenance.<br>• Limited to accessible areas and safe working conditions.<br>• Additional detectors, filters, or materials beyond included limits may incur added cost.<br>• Service pricing may vary based on location, property size, and access conditions.`
 };
-
-const cityLookup = new Map();
-const zipLookup = [];
-
-Object.entries(zones).forEach(([zoneNumber, zone]) => {
-  zone.cities.forEach(city => cityLookup.set(city, { zoneNumber, ...zone }));
-  zone.zipPrefixes.forEach(prefix => zipLookup.push({ prefix, value:{ zoneNumber, ...zone } }));
-});
-
-function findZone(query) {
-  const q = query.trim().toLowerCase();
-  if (!q) return null;
-  if (cityLookup.has(q)) return cityLookup.get(q);
-  const digits = q.replace(/\D/g, "");
+function zipToZone(zip) {
+  const digits = (zip || "").replace(/\D/g, "");
   if (!digits) return null;
-  const hit = zipLookup.find(z => digits.startsWith(z.prefix));
-  return hit ? hit.value : null;
+  for (const zoneNum of ["1","2","3","4"]) { const exacts = zoneExactZips[zoneNum] || []; if (exacts.includes(digits)) return { zoneNumber: zoneNum, ...zonesMeta[zoneNum] }; }
+  for (const zoneNum of ["1","2","3","4"]) { const prefixes = zonePrefixRanges[zoneNum] || []; if (prefixes.some(prefix => digits.startsWith(prefix))) return { zoneNumber: zoneNum, ...zonesMeta[zoneNum] }; }
+  return null;
 }
-
-function formatCurrency(v) {
-  return new Intl.NumberFormat("en-US", {
-    style:"currency",
-    currency:"USD",
-    maximumFractionDigits:2
-  }).format(v);
-}
-
-function getBasePlanPrice(plan, adj) {
-  return plan === "irrigation"
-    ? basePlans.irrigation + Math.round(adj * 0.75)
-    : basePlans[plan] + adj;
-}
-
-function getFilterPrice(type) {
-  if (type === "large") return 35;
-  if (type === "media") return 75;
-  if (type === "16x20x4") return 40;
-  if (type === "20x25x4") return 45;
-  return 25;
-}
-
-let selectedPlan = "plan2";
+function formatCurrency(v) { return new Intl.NumberFormat("en-US", { style:"currency", currency:"USD", maximumFractionDigits:2 }).format(v || 0); }
+function getBasePlanPrice(plan, adj) { return plan === "irrigation" ? basePlans.irrigation + Math.round(adj * 0.75) : basePlans[plan] + adj; }
+function getFilterPrice(type) { if (type === "large") return 35; if (type === "media") return 75; if (type === "16x20x4") return 40; if (type === "20x25x4") return 45; return 25; }
+let selectedPlan = "plan1";
 let attic = false;
 let currentZone = null;
-
 const area = document.getElementById("area");
 const zoneBox = document.getElementById("zoneBox");
 const plansCard = document.getElementById("plansCard");
 const filtersCard = document.getElementById("filtersCard");
 const summaryCard = document.getElementById("summaryCard");
-const filters = document.getElementById("filters");
-const filterType = document.getElementById("filterType");
 const atticBtn = document.getElementById("atticBtn");
 const manualWrap = document.getElementById("manualWrap");
 const manualZone = document.getElementById("manualZone");
-
-function toggleDetails(plan) {
-  const el = document.getElementById("details-" + plan);
-  if (!el) return;
-  el.style.display = (el.style.display === "none" || el.style.display === "") ? "block" : "none";
-}
-
+function toggleDetails(plan) { const el = document.getElementById("details-" + plan); if (!el) return; el.style.display = (el.style.display === "none" || el.style.display === "") ? "block" : "none"; }
 function renderPlans() {
   document.querySelectorAll(".plan-btn").forEach(btn => {
     const key = btn.dataset.plan;
     btn.classList.toggle("active", selectedPlan === key);
-
-    btn.innerHTML =
-      "<strong>" + planTitles[key] + "</strong><br><span>" +
-      formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) +
-      "</span>" +
-      "<br><br><button type='button' class='detail-btn' onclick=\"event.stopPropagation(); toggleDetails('" + key + "');\">View Details</button>" +
-      "<div id='details-" + key + "' class='details'>" + planDetails[key] + "</div>";
+    btn.innerHTML = "<strong>" + planTitles[key] + "</strong><br><span>" + formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) + "</span>" + "<br><br><button type='button' class='detail-btn' onclick=\"event.stopPropagation(); toggleDetails('" + key + "');\">View Details</button>" + "<div id='details-" + key + "' class='details'>" + planDetails[key] + "</div>";
   });
 }
-
-function getManualZone() {
-  if (!manualZone.value) return null;
-  return { zoneNumber: manualZone.value, ...zones[manualZone.value] };
-}
-
+function getManualZone() { if (!manualZone.value) return null; return { zoneNumber: manualZone.value, ...zonesMeta[manualZone.value] }; }
 function updateQuote() {
-  const detected = findZone(area.value);
+  const detected = zipToZone(area.value);
   currentZone = detected || getManualZone();
-
-  if (detected) {
-    manualWrap.hidden = true;
-    manualZone.value = "";
-    zoneBox.textContent = "Matched pricing area: " + detected.name + " (" + detected.label + ")";
-  } else {
-    manualWrap.hidden = false;
-    zoneBox.textContent = currentZone
-      ? "Manual zone selected: " + currentZone.name + " (" + currentZone.label + ")"
-      : "Enter city or ZIP to detect pricing zone, or select pricing zone manually";
-  }
-
-  if (!currentZone) {
-    plansCard.style.display = "none";
-    filtersCard.style.display = "none";
-    summaryCard.style.display = "none";
-    return;
-  }
-
-  plansCard.style.display = "block";
-  summaryCard.style.display = "block";
-  filtersCard.style.display = "block";
-
-  renderPlans();
-
-  const basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
-
+  if (detected) { manualWrap.hidden = true; manualZone.value = ""; zoneBox.textContent = "Matched pricing area: " + detected.name + " (" + detected.label + ")"; }
+  else { manualWrap.hidden = false; zoneBox.textContent = currentZone ? "Manual zone selected: " + currentZone.name + " (" + currentZone.label + ")" : "Enter property ZIP code to detect pricing zone, or select pricing zone manually"; }
+  if (!currentZone) { plansCard.style.display = "none"; filtersCard.style.display = "none"; summaryCard.style.display = "none"; return; }
+  plansCard.style.display = "block"; summaryCard.style.display = "block"; filtersCard.style.display = "block"; renderPlans();
+  let basePrice = getBasePlanPrice(selectedPlan, currentZone.adjustment);
   const filterCountNum = Number(document.getElementById("filters").value || 0);
   const selectedFilterType = document.getElementById("filterType").value;
-
   let filterMaterialTotal = 0;
-  if (selectedPlan !== "irrigation") {
-    filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType);
-  }
-
+  if (selectedPlan !== "irrigation") { filterMaterialTotal = filterCountNum * getFilterPrice(selectedFilterType); }
   let detectorPrice = 0;
   const detectorType = document.getElementById("detectorType").value;
   const detectorQty = Number(document.getElementById("detectorQty").value || 0);
@@ -567,40 +231,31 @@ function updateQuote() {
   const batteryServiceQty = Number(document.getElementById("batteryServiceQty").value || 0);
   const detectorLaborQty = Number(document.getElementById("detectorLaborQty").value || 0);
   const extraZones = Number(document.getElementById("extraZones").value || 0);
-
+  const irrigationBundle = document.getElementById("irrigationBundle").checked;
+  let irrigationBundlePrice = 0;
+  if (irrigationBundle) {
+    if (selectedPlan === "plan1") irrigationBundlePrice = 109;
+    if (selectedPlan === "plan1biannual") irrigationBundlePrice = 109;
+    if (selectedPlan === "plan2") irrigationBundlePrice = 99;
+    if (selectedPlan === "plan3") irrigationBundlePrice = 79;
+    irrigationBundlePrice += currentZone ? currentZone.adjustment : 0;
+  }
   if (detectorType === "hardwired") detectorPrice = 40;
   if (detectorType === "combo") detectorPrice = 70;
   if (detectorType === "battery") detectorPrice = 70;
-
   const detectorMaterialTotal = detectorPrice * detectorQty;
   const detectorServiceTotal = (extraDetectorQty * 20) + (batteryServiceQty * 22) + (detectorLaborQty * 45);
-
   const pmPhotos = document.getElementById("pmPhotos").checked;
   const homeSqft = Number(document.getElementById("homeSqft").value || 0);
-
   let pmPhotoTotal = 0;
-  if (pmPhotos) {
-    if (homeSqft <= 2000) {
-      pmPhotoTotal = 30;
-    } else if (homeSqft <= 3000) {
-      pmPhotoTotal = 45;
-    } else if (homeSqft <= 4000) {
-      pmPhotoTotal = 60;
-    } else {
-      pmPhotoTotal = 60;
-    }
-    pmPhotoTotal += currentZone ? currentZone.adjustment : 0;
-  }
-
+  if (pmPhotos) { if (homeSqft <= 2000) pmPhotoTotal = 30; else if (homeSqft <= 3000) pmPhotoTotal = 45; else if (homeSqft <= 4000) pmPhotoTotal = 60; else pmPhotoTotal = 60; pmPhotoTotal += currentZone ? currentZone.adjustment : 0; }
   const irrigationServiceTotal = extraZones * 38;
   const atticServiceTotal = attic ? 35 : 0;
-
   const materialSubtotal = filterMaterialTotal + detectorMaterialTotal;
-  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal;
+  const serviceSubtotal = detectorServiceTotal + irrigationServiceTotal + atticServiceTotal + pmPhotoTotal + irrigationBundlePrice;
   const materialsTax = materialSubtotal * taxRate;
   const addOn = materialSubtotal + serviceSubtotal + materialsTax;
   const total = basePrice + addOn;
-
   document.getElementById("basePrice").textContent = formatCurrency(basePrice);
   document.getElementById("materialsSubtotal").textContent = formatCurrency(materialSubtotal);
   document.getElementById("serviceSubtotal").textContent = formatCurrency(serviceSubtotal);
@@ -608,48 +263,27 @@ function updateQuote() {
   document.getElementById("addOnPrice").textContent = formatCurrency(addOn);
   document.getElementById("totalPrice").textContent = formatCurrency(total);
 }
-
 function generateQuote() {
-  const customerName = document.getElementById("customerName")?.value || "Customer";
-  const customerPhone = document.getElementById("customerPhone")?.value || "";
-  const customerAddress = document.getElementById("customerAddress")?.value || "";
+  const customerName = document.getElementById("customerName").value || "Customer";
+  const customerPhone = document.getElementById("customerPhone").value || "";
+  const customerAddress = document.getElementById("customerAddress").value || "";
   const total = document.getElementById("totalPrice").textContent;
-  const base = document.getElementById("basePrice").textContent;
-  const materials = document.getElementById("materialsSubtotal").textContent;
-  const service = document.getElementById("serviceSubtotal").textContent;
-  const tax = document.getElementById("materialsTax").textContent;
   const planLabel = planDisplayNames[selectedPlan] || selectedPlan;
-
-  const text =
-`Mobile Onsite Handyman Services LLC
-
-Quote For: ${customerName}
-Phone: ${customerPhone}
-Property Address: ${customerAddress}
-
-Selected Service:
-${planLabel}
-
-Pricing Breakdown:
-Base Plan: ${base}
-Materials: ${materials}
-Service & Labor: ${service}
-Materials Tax (8.75%): ${tax}
-
-Estimated Total: ${total}
-
-This quote is based on the selected plan, add-ons, property size, and service area.
-
-Call or text for same week service:
-951-388-4744
-mobileonsitehandyman@gmail.com`;
-
+  let bundleText = "";
+  if (document.getElementById("irrigationBundle")?.checked) {
+    if (selectedPlan === "plan1") bundleText = "\n• Irrigation Bundle Added ($109)";
+    if (selectedPlan === "plan1biannual") bundleText = "\n• Irrigation Bundle Added ($109)";
+    if (selectedPlan === "plan2") bundleText = "\n• Irrigation Bundle Added ($99)";
+    if (selectedPlan === "plan3") bundleText = "\n• Irrigation Bundle Added ($79)";
+  }
+  const text = "Hi " + customerName + ",\n\nThis is Tim with Mobile Onsite Handyman Services.\n\nHere is your service quote:\n\n" + planLabel + bundleText + "\n\nProperty: " + customerAddress + "\nPhone: " + customerPhone + "\n\nTotal: " + total + "\n\nThis includes all selected services, add-ons, and tax.\n\nLet me know if you'd like to schedule — I have availability this week.\n\nThanks,\nTim\nMobile Onsite Handyman\n951-388-4744";
   document.getElementById("quoteOutput").value = text;
 }
-
+function sendTextMessage() { const phone = document.getElementById("customerPhone").value || ""; const quoteText = document.getElementById("quoteOutput").value || ""; if (!quoteText) { alert("Generate the quote first."); return; } if (!phone) { alert("Enter customer phone number."); return; } const cleanedPhone = phone.replace(/\D/g, ""); const smsLink = "sms:" + cleanedPhone + "?body=" + encodeURIComponent(quoteText); window.location.href = smsLink; }
+function copyQuote() { const text = document.getElementById("quoteOutput").value; const status = document.getElementById("copyStatus"); if (!text) { status.textContent = "Generate the quote first."; return; } try { navigator.clipboard.writeText(text); status.textContent = "✓ Quote copied"; } catch (err) { status.textContent = "Copy not supported. Copy manually from the quote box."; } }
 area.addEventListener("input", updateQuote);
-filters.addEventListener("input", updateQuote);
-filterType.addEventListener("change", updateQuote);
+document.getElementById("filters").addEventListener("input", updateQuote);
+document.getElementById("filterType").addEventListener("change", updateQuote);
 manualZone.addEventListener("change", updateQuote);
 document.getElementById("detectorType").addEventListener("change", updateQuote);
 document.getElementById("detectorQty").addEventListener("input", updateQuote);
@@ -657,55 +291,12 @@ document.getElementById("extraDetectorQty").addEventListener("input", updateQuot
 document.getElementById("batteryServiceQty").addEventListener("input", updateQuote);
 document.getElementById("detectorLaborQty").addEventListener("input", updateQuote);
 document.getElementById("extraZones").addEventListener("input", updateQuote);
+document.getElementById("irrigationBundle").addEventListener("change", updateQuote);
 document.getElementById("pmPhotos").addEventListener("change", updateQuote);
 document.getElementById("homeSqft").addEventListener("input", updateQuote);
-
-atticBtn.addEventListener("click", function() {
-  attic = !attic;
-  atticBtn.textContent = attic ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge";
-  atticBtn.style.background = attic ? "#059669" : "#e2e8f0";
-  atticBtn.style.color = attic ? "white" : "#0f172a";
-  updateQuote();
-});
-
-document.querySelectorAll(".plan-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    selectedPlan = btn.dataset.plan;
-    updateQuote();
-  });
-});
-
+atticBtn.addEventListener("click", function() { attic = !attic; atticBtn.textContent = attic ? "Attic / Closet Access Added (+$35)" : "No Attic Access Charge"; atticBtn.style.background = attic ? "#059669" : "#e2e8f0"; atticBtn.style.color = attic ? "white" : "#0f172a"; updateQuote(); });
+document.querySelectorAll(".plan-btn").forEach(btn => { btn.addEventListener("click", function() { selectedPlan = btn.dataset.plan; updateQuote(); }); });
 updateQuote();
-
-function sendTextMessage() {
-  const phone = document.getElementById("customerPhone")?.value || "";
-  const quoteText = document.getElementById("quoteOutput")?.value || "";
-
-  if (!quoteText) {
-    alert("Generate the quote first.");
-    return;
-  }
-
-  if (!phone) {
-    alert("Enter customer phone number.");
-    return;
-  }
-
-  const cleanedPhone = phone.replace(/\D/g, "");
-  const smsLink = `sms:${cleanedPhone}?body=${encodeURIComponent(quoteText)}`;
-
-  window.location.href = smsLink;
-}
-
-function copyQuote() {
-  const text = document.getElementById("quoteOutput").value;
-  navigator.clipboard.writeText(text);
-  alert("Quote copied");
-}
-
-</script>
-}
-} 
 </script>
 </body>
 </html>
