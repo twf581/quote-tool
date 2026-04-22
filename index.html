@@ -196,13 +196,13 @@ let selectedPlan = "plan1";
 let attic = false;
 let currentZone = null;
 const area = document.getElementById("area");
-const zoneBox = document.getElementById("zoneBox");
+
 const plansCard = document.getElementById("plansCard");
 const filtersCard = document.getElementById("filtersCard");
 const summaryCard = document.getElementById("summaryCard");
 const atticBtn = document.getElementById("atticBtn");
-const manualWrap = document.getElementById("manualWrap");
-const manualZone = document.getElementById("manualZone");
+
+
 function toggleDetails(plan) { const el = document.getElementById("details-" + plan); if (!el) return; el.style.display = (el.style.display === "none" || el.style.display === "") ? "block" : "none"; }
 function renderPlans() {
   document.querySelectorAll(".plan-btn").forEach(btn => {
@@ -211,10 +211,10 @@ function renderPlans() {
     btn.innerHTML = "<strong>" + planTitles[key] + "</strong><br><span>" + formatCurrency(getBasePlanPrice(key, currentZone.adjustment)) + "</span>" + "<br><br><button type='button' class='detail-btn' onclick=\"event.stopPropagation(); toggleDetails('" + key + "');\">View Details</button>" + "<div id='details-" + key + "' class='details'>" + planDetails[key] + "</div>";
   });
 }
-function getManualZone() { if (!manualZone.value) return null; return { zoneNumber: manualZone.value, ...zonesMeta[manualZone.value] }; }
+
 function updateQuote() {
   const detected = zipToZone(area.value);
-  currentZone = detected || getManualZone();
+ currentZone = detected;
   if (detected) { manualWrap.hidden = true; manualZone.value = ""; zoneBox.textContent = "Matched pricing area: " + detected.name + " (" + detected.label + ")"; }
   else { manualWrap.hidden = false; zoneBox.textContent = currentZone ? "Manual zone selected: " + currentZone.name + " (" + currentZone.label + ")" : "Enter property ZIP code to detect pricing zone, or select pricing zone manually"; }
   if (!currentZone) { plansCard.style.display = "none"; filtersCard.style.display = "none"; summaryCard.style.display = "none"; return; }
